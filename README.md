@@ -33,4 +33,4 @@ php artisan migrate
 ```
 ## Usage
 
-Visit `/profilehub/dashboard` to check if it's working.
+Visit `/profilehub/index` to check if it's working.
