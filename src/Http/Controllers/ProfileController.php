@@ -85,7 +85,7 @@ class ProfileController extends Controller
         $page_title = 'User';
         $page_title = $page_title ? $page_title : $this->page_title;
 
-        return view('profilehub::admin.user.userShow',
+        return view('profilehub.vendor.admin.user.userShow',
         [
                 'user' => $user,
                 'you' => $you,
@@ -204,7 +204,7 @@ class ProfileController extends Controller
         $page_title = 'Edit Profile';
         $page_title = $page_title ? $page_title : $this->page_title;
 
-        return view('profilehub::admin.user.userEdit', compact(
+        return view('profilehub.vendor.admin.user.userEdit', compact(
             'user_detail' ,
             'default_user_details',
             'user',

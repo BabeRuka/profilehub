@@ -61,7 +61,7 @@ class AdminUserDetailsController extends Controller
         $page_title = 'Additional Fields';
         $page_title = $page_title ? $page_title : $this->page_title;
         $user_id = Auth::id();
-        return view('profilehub::admin.users.profile.usersDetails')->with(compact(['user_fields', 'user_field_type', 'user_groups', 'page_perm','page_title']));
+        return view('profilehub.vendor.admin.users.profile.usersDetails')->with(compact(['user_fields', 'user_field_type', 'user_groups', 'page_perm','page_title']));
     }
 
     public function userfield(Request $request)
@@ -103,7 +103,7 @@ class AdminUserDetailsController extends Controller
         $user_id = Auth::id();
         $page_title = 'Additional Fields';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub::admin.users.profile.userFieldGroups')->with(compact(['user_groups', 'page_perm','page_title']));
+        return view('profilehub.vendor.admin.users.profile.userFieldGroups')->with(compact(['user_groups', 'page_perm','page_title']));
     }
 
     public function children(Request $request)
@@ -119,7 +119,7 @@ class AdminUserDetailsController extends Controller
         $page_title = $page_title ? $page_title : $this->page_title;
         $UserFieldGroups = new UserFieldGroups();
         $group = $UserFieldGroups->find($id);
-        return view('profilehub::admin.users.profile.groupChildren', compact('group_id','group', 'children', 'page_perm','page_title'));
+        return view('profilehub.vendor.admin.users.profile.groupChildren', compact('group_id','group', 'children', 'page_perm','page_title'));
     }
     public function childrenData(Request $request){
         $son_id = $request->input('son_id');

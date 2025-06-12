@@ -39,7 +39,7 @@ class WidgetsController extends Controller
                     $all_countries = $LmsCountries->all();
                     $dropdown_id = $request->input('id');
                     $dropdown_name = $request->input('name');
-                    $returnHTML = view('profilehub::admin.widgets.forms.parts.country-list',
+                    $returnHTML = view('profilehub.vendor.admin.widgets.forms.parts.country-list',
                         [
                             'dropdown_id' => $dropdown_id,
                             'dropdown_name' => $dropdown_name,
@@ -61,7 +61,7 @@ class WidgetsController extends Controller
 
                     $dropdown_id = $request->input('id');
                     $dropdown_name = $request->input('name');
-                    $returnHTML = view('profilehub::admin.widgets.forms.parts.state-list',
+                    $returnHTML = view('profilehub.vendor.admin.widgets.forms.parts.state-list',
                         [
                             'dropdown_id' => $dropdown_id,
                             'dropdown_name' => $dropdown_name,

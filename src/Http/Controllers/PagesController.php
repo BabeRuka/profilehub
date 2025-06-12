@@ -35,7 +35,7 @@ class PagesController extends Controller
         $user = Auth::user();
         $page_title = 'Layout';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub::admin.pages.public.publicpages', [
+        return view('profilehub.vendor.admin.pages.public.publicpages', [
             'user' => $user,
             'page_title' => $page_title,
         ]);
@@ -48,7 +48,7 @@ class PagesController extends Controller
 
         $page_title = 'Layout';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub::admin.pages.public.about', [
+        return view('profilehub.vendor.admin.pages.public.about', [
             'user' => $user,
             'page_title' => $page_title,
         ]);
@@ -60,7 +60,7 @@ class PagesController extends Controller
 
         $page_title = 'Layout';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub::admin.pages.public.contactus', [
+        return view('profilehub.vendor.admin.pages.public.contactus', [
             'user' => $user,
             'page_title' => $page_title,
         ]);
@@ -71,7 +71,7 @@ class PagesController extends Controller
 
         $page_title = 'Layout';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub::admin.pages.public.privacypolicy', [
+        return view('profilehub.vendor.admin.pages.public.privacypolicy', [
             'user' => $user,
             'page_title' => $page_title,
         ]);
@@ -82,7 +82,7 @@ class PagesController extends Controller
 
         $page_title = 'Layout';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub::admin.pages.public.terms', [
+        return view('profilehub.vendor.admin.pages.public.terms', [
             'user' => $user,
             'page_title' => $page_title,
         ]);

@@ -42,7 +42,7 @@ class AdminLayoutController extends Controller
         
         $page_title = 'Pages';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub::admin.pages.dashboard',[
+        return view('profilehub.vendor.admin.pages.dashboard',[
             'user' => $user,
             'all_pages' => $all_pages,
             'all_users' => $all_users,
@@ -61,7 +61,7 @@ class AdminLayoutController extends Controller
 
         $page_title = 'Pages';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub::admin.pages.pages', [
+        return view('profilehub.vendor.admin.pages.pages', [
             'user' => $user,
             'all_pages' => $all_pages,
             'all_users' => $all_users,
@@ -85,7 +85,7 @@ class AdminLayoutController extends Controller
 
         $page_title = 'Widgets';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub::admin.pages.widgetList', [
+        return view('profilehub.vendor.admin.pages.widgetList', [
             'user' => $user,
             'request' => $request,
             'all_modules' => $all_modules,
@@ -138,7 +138,7 @@ class AdminLayoutController extends Controller
 
         $page_title = 'Layout';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub::admin.pages.public.userdashboard', [
+        return view('profilehub.vendor.admin.pages.public.userdashboard', [
             'user' => $user,
             'page_title' => $page_title,
         ]);
@@ -149,7 +149,7 @@ class AdminLayoutController extends Controller
 
         $page_title = 'Layout';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub::admin.pages.public.forceprofile', [
+        return view('profilehub.vendor.admin.pages.public.forceprofile', [
             'user' => $user,
             'page_title' => $page_title,
         ]);
@@ -160,7 +160,7 @@ class AdminLayoutController extends Controller
 
         $page_title = 'Layout';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub::admin.pages.public.registration', [
+        return view('profilehub.vendor.admin.pages.public.registration', [
             'user' => $user,
             'page_title' => $page_title,
         ]);

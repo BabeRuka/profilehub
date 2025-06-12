@@ -63,7 +63,7 @@ class AdminUsersController extends Controller
         $all_users = (object)$all_users;
         $page_title = 'Users';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub::admin.users.users', compact('page_title', 'users', 'you', 'userdetails_headers', 'userdetails_cols', 'page_perm'));
+        return view('profilehub.vendor.admin.users.users', compact('page_title', 'users', 'you', 'userdetails_headers', 'userdetails_cols', 'page_perm'));
     }
     function walk($val, $key, $new_array)
     {
@@ -83,7 +83,7 @@ class AdminUsersController extends Controller
         $you = auth()->user();
         $page_title = 'Groups';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub::admin.users.usersGroups', compact('page_title', 'you', 'type_group', 'groups', 'users', 'group_users', 'page_perm'));
+        return view('profilehub.vendor.admin.users.usersGroups', compact('page_title', 'you', 'type_group', 'groups', 'users', 'group_users', 'page_perm'));
     }
     public function group(Request $request): View|Response
     { 
@@ -98,7 +98,7 @@ class AdminUsersController extends Controller
         $you = auth()->user();
         $page_title = 'Group';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub::admin.users.usersGroup', compact('page_title', 'you', 'groups', 'group_users', 'page_perm'));
+        return view('profilehub.vendor.admin.users.usersGroup', compact('page_title', 'you', 'groups', 'group_users', 'page_perm'));
     }
     public function createrecord(Request $request)
     {

@@ -12,7 +12,7 @@ class AdminController extends Controller
     }
     public function index(Request $request)
     {
-      return view('profilehub::admin.index');
+      return view('profilehub.vendor.admin.index');
     }
     function allPageRoles(){
       return [

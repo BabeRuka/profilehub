@@ -49,7 +49,7 @@ class UsersController extends Controller
         $userdetails_headers = $this->userDetailsTable(null, 1);
         $userdetails_body = $this->userDetailsTable(null, 2);
         $page_title = $this->page_title ? $this->page_title : 'Users';
-        return view('profilehub::admin.users.users', compact('users', 'you', 'userdetails_headers', 'userdetails_body','page_perm','page_title'));
+        return view('profilehub.vendor.admin.users.users', compact('users', 'you', 'userdetails_headers', 'userdetails_body','page_perm','page_title'));
     }
 
     /**
@@ -65,7 +65,7 @@ class UsersController extends Controller
         $UserProfile = new UserProfiles();
         $force = $UserProfile->where(['user_id' => $request->input('id')])->first();
         $page_title = $this->page_title ? $this->page_title : 'User';
-        return view('profilehub::admin.user.userShow',
+        return view('profilehub.vendor.admin.user.userShow',
         [
             'user' => $user,
             'force' => $force,
@@ -88,13 +88,13 @@ class UsersController extends Controller
         $user = User::find($user_id);
         $user_detail = $user_details->where(['user_id' => $user_id])->first();
         $page_title = $this->page_title ? $this->page_title : 'User';
-        return view('profilehub::admin.users.userEditForm', compact('user','user_detail','page_title','page_perm'));
+        return view('profilehub.vendor.admin.users.userEditForm', compact('user','user_detail','page_title','page_perm'));
     }
 
     public function create(Request $request): View|Response
     {
         $page_title = $this->page_title ? $this->page_title : 'New User';
-        return view('profilehub::admin.users.userCreateForm',compact('page_title'));
+        return view('profilehub.vendor.admin.users.userCreateForm',compact('page_title'));
     }
      
     /**

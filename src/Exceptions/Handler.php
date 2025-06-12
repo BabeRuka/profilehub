@@ -48,7 +48,7 @@ class Handler extends ExceptionHandler
     public function render($request, \Throwable $exception)
     {
         if ($exception instanceof HttpException && $exception->getStatusCode() === 419) {
-            return response()->view('profilehub::errors.419', ['exception' => $exception, 'message' => 'OPPS! Your session has expired :-( Please log in again.'], 419);
+            return response()->view('profilehub.vendor.errors.419', ['exception' => $exception, 'message' => 'OPPS! Your session has expired :-( Please log in again.'], 419);
         }
 
         return parent::render($request, $exception);

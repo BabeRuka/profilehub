@@ -43,7 +43,7 @@ class AdminPageModulesController extends Controller
         }
         $page_title = 'Modules';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub::admin.modules.moduleList')->with(compact(['page_title', 'groups', 'modules', 'page_perm', 'request']));
+        return view('profilehub.vendor.admin.modules.moduleList')->with(compact(['page_title', 'groups', 'modules', 'page_perm', 'request']));
     }
     //groups
     public function groups(Request $request)
@@ -55,7 +55,7 @@ class AdminPageModulesController extends Controller
         $groups = $PageModuleGroups->all();
         $page_title = 'Groups';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub::admin.modules.moduleGroupList')->with(compact(['page_title', 'groups', 'modules', 'page_perm']));
+        return view('profilehub.vendor.admin.modules.moduleGroupList')->with(compact(['page_title', 'groups', 'modules', 'page_perm']));
     }
     public function store(Request $request)
     {

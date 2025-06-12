@@ -38,7 +38,7 @@ class AdminPagesController extends Controller
     public function index(Request $request)
     { 
         $user = Auth::user(); 
-        return view('profilehub::admin.pages.dashboard',[
+        return view('profilehub.vendor.admin.pages.dashboard',[
             'module_id' => $this->module_id,
             'module_name' => $this->module_name,
             'module_slug' => $this->module_slug,
@@ -78,7 +78,7 @@ class AdminPagesController extends Controller
         //$page_input_settings;
         $page_title = 'Pages';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub::admin.pages.edit', [
+        return view('profilehub.vendor.admin.pages.edit', [
             'user' => $user,
             'page' => $page,
             'admin' => $admin,
