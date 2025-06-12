@@ -1,2 +1,36 @@
-# Laravel-ProfileHub
-Laravel ProfileHub provides a robust and flexible foundation for managing user profiles within your Laravel applications. Built with best practices, it offers essential tools for creating, reading, updating, and deleting user profile data, allowing you to seamlessly integrate comprehensive profile management into your platform.
+# Laravel ProfileHub
+
+A Laravel package to manage user profiles.
+
+## Installation
+
+```bash
+composer require baberuka/profilehub
+```
+
+## Register the Service Provider (if not auto-discovered)
+If you're not using Laravel auto-discovery, register the provider manually in config/app.php.
+Add the ProfileHubServiceProvider calls to the providers section. 
+
+```
+    'providers' => [
+        BabeRuka\ProfileHub\ProfileHubServiceProvider::class,
+    ],
+```
+## Publishing
+
+```bash
+php artisan vendor:publish --tag=profilehub-config
+php artisan vendor:publish --tag=profilehub-views
+php artisan vendor:publish --tag=profilehub-assets
+
+```
+## Run the Migrations
+
+```bash
+php artisan profilehub:migrate
+php artisan migrate
+```
+## Usage
+
+Visit `/profilehub/dashboard` to check if it's working.
