@@ -35,8 +35,7 @@ class AdminUserDetailsController extends Controller
     {
         
         $request = new Request();
-        $this->request = $request;
-        $this->middleware('auth');
+        $this->request = $request; 
         
         $this->module_id = 1;
         $this->module_name = 'User Management';

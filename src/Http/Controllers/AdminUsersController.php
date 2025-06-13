@@ -32,8 +32,7 @@ class AdminUsersController extends Controller
     protected $admin;
 
     public function __construct()
-    {
-        $this->middleware('auth');
+    { 
         $this->recipients = array('admin', 'superadmin');
         $this->group = 'user';
         $this->module_id = 1;

@@ -25,8 +25,7 @@ class UsersController extends Controller
     protected $admin;
 
     public function __construct()
-    {
-        $this->middleware('auth');
+    { 
         $this->module_id = 1;
         $this->lms_group = 'user';
         $this->module_name = 'User Management';

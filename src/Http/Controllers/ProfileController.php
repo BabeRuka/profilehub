@@ -35,8 +35,7 @@ class ProfileController extends Controller
     protected $admin;
 
     public function __construct()
-    {
-        $this->middleware('auth');
+    { 
         $this->module_id = 1;
         $this->module_name = 'User Management';
         $this->module_slug = '_USER';

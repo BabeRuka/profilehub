@@ -23,9 +23,7 @@ class ImportController extends Controller
     public $page_title;
     
     public function __construct()
-    {
-        $this->middleware('log.requests');
-        $this->middleware('auth');
+    { 
         $this->module_name = 'Imports';
         $this->page_title = $this->module_name;
     }

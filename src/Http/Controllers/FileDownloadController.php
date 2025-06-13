@@ -16,8 +16,7 @@ class FileDownloadController extends Controller
     protected $defaultProfilePhotoPath = 'profile-photos';
 
     public function __construct()
-    {
-        $this->middleware('log.requests');
+    { 
         $this->module_id = 1;
         $this->module_name = 'File Downloads';
         $this->module_slug = '_USER';

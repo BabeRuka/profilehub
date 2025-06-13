@@ -18,9 +18,7 @@ class AdminAjaxController extends Controller
     public $page_title;
 
     public function __construct()
-    {
-        $this->middleware('log.requests');
-        $this->middleware('auth');
+    { 
 		$request = new Request();
         $this->request = $request;
         $this->module_id = 9;

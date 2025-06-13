@@ -15,10 +15,7 @@ class FileUploadController extends Controller
     protected $defaultProfilePhotoPath = 'profile-photos';
     
     public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('admin');
-        $this->middleware('log.requests');
+    { 
         $this->module_id = 1;
         $this->module_name = 'File Management';
         $this->module_slug = '_USER';
