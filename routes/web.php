@@ -19,8 +19,8 @@ use BabeRuka\ProfileHub\Http\Controllers\UsersController;
 use BabeRuka\ProfileHub\Http\Controllers\WidgetsController;
 use Illuminate\Support\Facades\Route; 
 
-Route::get('profilehub/index', [AdminPagesController::class, 'index'])->middleware([Authenticate::class])->name('profilehub.index');
-Route::prefix('profilehub')->middleware([Authenticate::class])->group(function () {
+Route::get('profilehub/index', [AdminPagesController::class, 'index'])->middleware(['auth'])->name('profilehub.index');
+Route::prefix('profilehub')->middleware(['auth'])->group(function () {
     // All routes within this group will require authentication 
         // Dashboard
     Route::get('/dashboard', [AdminPagesController::class, 'index'])->name('profilehub.dashboard');
