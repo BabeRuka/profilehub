@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 @php
 use BabeRuka\ProfileHub\Repository\UserAdmin;
 use BabeRuka\ProfileHub\Repository\UserFunctions;
@@ -206,7 +206,7 @@ $functions = new UserFunctions();
                                             <td>
                                                 @if ($page_perm['delete'])
                                                     <a href="#deleteModal" type="button"
-                                                        onclick="updateDeleteModal('Delete Profile Field {{ $son->translation }}', 'Are you sure you want to delete this Profile field?','{{ route('profilehub::admin.users.profile.userdetails.createrecord') }}','son_id','{{ $son->son_id }}','back_url','{{ route('profilehub::admin.users.profile.fields') }}','POST','delete-user-field-son')"
+                                                        onclick="updateDeleteModal('Delete Profile Field {{ $son->translation }}', 'Are you sure you want to delete this Profile field?','{{ route('profilehub.admin.users.groups.userdetails.createrecord') }}','son_id','{{ $son->son_id }}','back_url','{{ route('profilehub.admin.users.profile.fields') }}','POST','delete-user-field-son')"
                                                         data-bs-toggle="modal" data-bs-target="#deleteModal"
                                                         class="DeleteUserField">
                                                         <i class="ri-delete-bin-5-line text-danger"></i>
@@ -229,7 +229,7 @@ $functions = new UserFunctions();
     @include('profilehub::admin.users.profile.modals.add-user-profile-field-son-modal')
     @include('profilehub::admin.users.profile.modals.edit-user-profile-field-son-modal')
     @if ($page_perm['update'])
-        <form id="fixSeqeunce" action="{{ route('profilehub::admin.users.profile.userdetails.createrecord') }}" method="POST" novalidate>
+        <form id="fixSeqeunce" action="{{ route('profilehub.admin.users.groups.userdetails.createrecord') }}" method="POST" novalidate>
             @csrf
             @method('POST')
             <input type="hidden" name="function" value="fix-son-sequence" />

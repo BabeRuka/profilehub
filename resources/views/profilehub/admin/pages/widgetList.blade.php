@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 <?php
 $num = 1;
 //dd($modules);
@@ -23,7 +23,7 @@ $num = 1;
                             </div>
                         </div>
                         <hr />
-                        <form class="needs-validation" action="{{ route('profilehub::admin.modules.createrecord') }}" method="POST"
+                        <form class="needs-validation" action="{{ route('profilehub.admin.modules.createrecord') }}" method="POST"
                             enctype="multipart/form-data" novalidate>
                             <input type="hidden" name="function" id="function" value="manage-role-types" />
                             @csrf @method('POST')
@@ -150,7 +150,7 @@ $num = 1;
                     aria-labelledby="linkMenuModuleLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
-                            <form class="needs-validation" action="{{ route('profilehub::admin.modules.createrecord') }}"
+                            <form class="needs-validation" action="{{ route('profilehub.admin.modules.createrecord') }}"
                                 method="POST" novalidate>
                                 <div class="modal-header">
                                     <div class="container">

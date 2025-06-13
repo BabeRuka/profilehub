@@ -8,7 +8,7 @@
           <div class="animated fadeIn">
             <div class="row">
               <div class="col-xs-12	col-sm-12	col-md-12	col-lg-12">
-                <form id="userGroupForm" class="needs-validations" action="{{ route('profilehub::admin.groups.createrecord') }}" method="POST" novalidate>
+                <form id="userGroupForm" class="needs-validations" action="{{ route('profilehub.admin.groups.createrecord') }}" method="POST" novalidate>
                     <div class="card">
                         <div class="card-header">
                             <i class="fa fa-align-justify"></i> {{ $group->group_name }} ({{ (count($users_in_group) ? count($users_in_group) : 0) }} Users)
@@ -80,7 +80,7 @@
             </div>
           </div>
         </div>
-        <form name="DeleteCourseGroupForm" id="DeleteCourseGroupForm" action="{{ route('profilehub::admin.groups.createrecord') }}" method="POST">
+        <form name="DeleteCourseGroupForm" id="DeleteCourseGroupForm" action="{{ route('profilehub.admin.groups.createrecord') }}" method="POST">
             <input type="hidden" name="function" id="function-cgd" value="del-user-group-user" />
             <input type="hidden" name="group_id" id="dcgf-pidv" value="" />
             <input type="hidden" name="user_id" id="dcgf-fidv" value="" />

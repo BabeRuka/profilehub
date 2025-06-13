@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 @inject('admin', 'BabeRuka\ProfileHub\Repository\UserAdmin')
 @php 
 $widget_types = $admin->widget_types();
@@ -53,14 +53,14 @@ $widget_types = $admin->widget_types();
                                             </td>
                                             <td class="text-center">
                                                 @if ($page->page_settings == 'public_page')
-                                                    <a href="{{ route('profilehub::admin.layout.pages.preview',['page_id' => $page->page_id, 'type' => $page->page_settings])}}"
+                                                    <a href="{{ route('profilehub.admin.layout.pages.preview',['page_id' => $page->page_id, 'type' => $page->page_settings])}}"
                                                         data-tooltip="tooltip" data-placement="top" title="Preview {{ $page->page_name }} Page"
                                                         class="btn btn-success" href="#">
                                                         <i class="fa fa-hand-o-up" aria-hidden="true"></i>
                                                     </a>
                                                 @endif
                                                 <a class=""
-                                                    href="{{ route('profilehub::admin.layout.pages.edit', ['page' => $page->page_id, 'page_name' => $page->page_name]) }}"
+                                                    href="{{ route('profilehub.admin.layout.pages.edit', ['page' => $page->page_id, 'page_name' => $page->page_name]) }}"
                                                     data-tooltip="tooltip" data-placement="top" title="Edit {{ $page->page_name }} Page">
                                                     <i class="ri-edit-circle-fill text-primary" aria-hidden="true"></i>
                                                 </a>
@@ -87,7 +87,7 @@ $widget_types = $admin->widget_types();
 
     <div class="modal fade" id="delPageModal" tabindex="-1" role="dialog" aria-labelledby="delPageModalModalLabel"
         aria-modal="true">
-        <form action="{{ route('profilehub::admin.layout.createrecord') }}" id="delPageModalModalForm" method="POST"
+        <form action="{{ route('profilehub.admin.layout.createrecord') }}" id="delPageModalModalForm" method="POST"
             novalidate="">
             <input type="hidden" name="function" value="del-page" />
             <input type="hidden" name="page_id" id="page_id_del" value="0" />

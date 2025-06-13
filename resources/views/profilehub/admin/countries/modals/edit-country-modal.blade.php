@@ -5,7 +5,7 @@
             data-bs-keyboard="false">
             <div class="modal-dialog modal-fullscreen modal-halfpage" role="document">
                 <div class="modal-content">
-                    <form method="POST" action="{{ route('profilehub::admin.countries.createrecord') }}" id="createGroupForm"
+                    <form method="POST" action="{{ route('profilehub.admin.countries.createrecord') }}" id="createGroupForm"
                         class="needs-validation" accesskey="" novalidate>
                         <div class="modal-header">
                             <h5 class="modal-title text-uppercase fw-bold">

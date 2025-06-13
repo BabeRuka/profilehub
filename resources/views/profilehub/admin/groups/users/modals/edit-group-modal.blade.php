@@ -5,7 +5,7 @@
             data-bs-keyboard="false">
             <div class="modal-dialog modal-fullscreen modal-halfpage" role="document">
                 <div class="modal-content">
-                    <form class="needs-validation" action="{{ route('profilehub::admin.groups.createrecord') }}"
+                    <form class="needs-validation" action="{{ route('profilehub.admin.groups.createrecord') }}"
                         method="POST" novalidate>
                         @csrf
                         @method('POST')

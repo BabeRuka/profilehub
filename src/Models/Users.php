@@ -28,8 +28,5 @@ class Users extends Model
     public function details()
     {
         return $this->hasOne('BabeRuka\ProfileHub\Models\UserDetails::class', 'user_id', 'id');
-    }
-    protected $dates = [
-        'deleted_at'
-    ];
+    } 
 }

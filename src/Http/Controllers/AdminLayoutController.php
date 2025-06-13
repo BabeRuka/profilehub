@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use BabeRuka\ProfileHub\Models\Pages;
 use BabeRuka\ProfileHub\Models\PageData;
 use BabeRuka\ProfileHub\Repository\UserFunctions;
-use BabeRuka\ProfileHub\Models\User;
+use App\Models\User;
+use BabeRuka\ProfileHub\Models\Users;
 use BabeRuka\ProfileHub\Models\PageModules;
 use BabeRuka\ProfileHub\Models\PageModuleGroups; 
 use BabeRuka\ProfileHub\Models\PageWidgets;
@@ -42,7 +43,7 @@ class AdminLayoutController extends Controller
         
         $page_title = 'Pages';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub.vendor.admin.pages.dashboard',[
+        return view('vendor.profilehub.admin.pages.dashboard',[
             'user' => $user,
             'all_pages' => $all_pages,
             'all_users' => $all_users,
@@ -61,7 +62,8 @@ class AdminLayoutController extends Controller
 
         $page_title = 'Pages';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub.vendor.admin.pages.pages', [
+        ///vendor/profilehub/admin/pages
+        return view('vendor.profilehub.admin.pages.pages', [
             'user' => $user,
             'all_pages' => $all_pages,
             'all_users' => $all_users,
@@ -85,7 +87,7 @@ class AdminLayoutController extends Controller
 
         $page_title = 'Widgets';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub.vendor.admin.pages.widgetList', [
+        return view('vendor.profilehub.admin.pages.widgetList', [
             'user' => $user,
             'request' => $request,
             'all_modules' => $all_modules,
@@ -138,7 +140,7 @@ class AdminLayoutController extends Controller
 
         $page_title = 'Layout';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub.vendor.admin.pages.public.userdashboard', [
+        return view('vendor.profilehub.admin.pages.public.userdashboard', [
             'user' => $user,
             'page_title' => $page_title,
         ]);
@@ -149,7 +151,7 @@ class AdminLayoutController extends Controller
 
         $page_title = 'Layout';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub.vendor.admin.pages.public.forceprofile', [
+        return view('vendor.profilehub.admin.pages.public.forceprofile', [
             'user' => $user,
             'page_title' => $page_title,
         ]);
@@ -160,7 +162,7 @@ class AdminLayoutController extends Controller
 
         $page_title = 'Layout';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub.vendor.admin.pages.public.registration', [
+        return view('vendor.profilehub.admin.pages.public.registration', [
             'user' => $user,
             'page_title' => $page_title,
         ]);

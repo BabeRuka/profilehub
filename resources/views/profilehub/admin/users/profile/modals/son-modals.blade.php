@@ -21,7 +21,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <form
-                                    action="{{ route('profilehub::admin.users.profile.userdetails.createrecord') }}"
+                                    action="{{ route('profilehub.admin.users.groups.userdetails.createrecord') }}"
                                     method="POST">
                                     <input type="hidden" name="function" value="delete-user-field" />
                                     <input type="hidden" name="son_id" id="son_id_del" value="0" />
@@ -77,7 +77,7 @@
                         <div class="col-xs-12 col-sm-12	col-md-12 col-lg-12 col-md-8">
                             <h4 class="mb-3"></h4>
                             <form class="needs-validation" id="createrecord" name="createrecord"
-                                action="{{ route('profilehub::admin.users.profile.userdetails.createrecord') }}"
+                                action="{{ route('profilehub.admin.users.groups.userdetails.createrecord') }}"
                                 method="POST" novalidate>
                                 @csrf
                                 @method('POST')
@@ -168,7 +168,7 @@
                         <div class="col-xs-12 col-sm-12	col-md-12 col-lg-12 col-md-8">
                             <h4 class="mb-3"></h4>
                             <form class="needs-validation" id="createrecord" name="createrecord"
-                                action="{{ route('profilehub::admin.users.profile.userdetails.createrecord') }}"
+                                action="{{ route('profilehub.admin.users.groups.userdetails.createrecord') }}"
                                 method="POST" novalidate>
                                 @csrf
                                 @method('POST')
@@ -258,7 +258,7 @@
                         <div class="col-xs-12 col-sm-12	col-md-12 col-lg-12 col-md-8">
                             <h4 class="mb-3"></h4>
                             <form class="needs-validation" id="createrecord" name="createrecord"
-                                action="{{ route('profilehub::admin.users.profile.userdetails.createrecord') }}"
+                                action="{{ route('profilehub.admin.users.groups.userdetails.createrecord') }}"
                                 method="POST" novalidate>
                                 @csrf
                                 @method('POST')
@@ -342,7 +342,7 @@
                         <div class="col-xs-12 col-sm-12	col-md-12 col-lg-12 col-md-8">
                             <h4 class="mb-3"></h4>
                             <form class="needs-validation" id="createrecord" name="createrecord"
-                                action="{{ route('profilehub::admin.users.profile.userdetails.createrecord') }}"
+                                action="{{ route('profilehub.admin.users.groups.userdetails.createrecord') }}"
                                 method="POST" novalidate>
                                 @csrf
                                 @method('POST')

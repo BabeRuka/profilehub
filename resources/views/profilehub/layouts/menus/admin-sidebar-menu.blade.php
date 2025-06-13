@@ -74,7 +74,7 @@
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('profilehub.admin.users.profile.field') }}" class="menu-link">
+                        <a href="{{ route('profilehub.admin.users.groups.children.all') }}" class="menu-link">
                             <div class="d-flex justify-content-between w-100 align-items-center" data-i18n="Groups">
                                 Additional Fields</div>
                         </a>
@@ -82,29 +82,7 @@
                 </ul>
             </li>
 
-            <li class="menu-item">
-                <a href="#" class="menu-link menu-toggle">
-                    <i class="menu-icon tf-icons ri-tools-line"></i>
-                    <div class="d-flex justify-content-between w-100 align-items-center" data-i18n="User Groups">
-                        <span>Modules</span>
-                        <i class="ri-arrow-down-s-line toggle-icon"></i>
-                    </div>
-                </a>
-                <ul class="menu-sub">
-                    <li class="menu-item">
-                        <a href="{{ route('profilehub.admin.modules') }}" class="menu-link">
-                            <div class="d-flex justify-content-between w-100 align-items-center" data-i18n="Modules">
-                                Modules</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('profilehub.admin.modules.groups') }}" class="menu-link">
-                            <div class="d-flex justify-content-between w-100 align-items-center" data-i18n="Modules">
-                                Groups</div>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+             
 
 
             <li class="menu-item">

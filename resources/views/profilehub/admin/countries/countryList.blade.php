@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 @php
     //$all_categories = $data['all_categories'];
 @endphp
@@ -79,7 +79,7 @@
             },
             ajax: ({
                 type: "POST",
-                url: '{{ route('profilehub::admin.countries.data') }}'
+                url: '{{ route('profilehub.admin.countries.data') }}'
             }),
             "lengthMenu": [
                 [10, 25, 50, -1],
@@ -129,11 +129,11 @@
                     name: 'edit',
                     render: function(data, type, row) {
                         //deleteModalTitle
-                        var del_url = '{{ route('profilehub::admin.countries.delete') }}';
+                        var del_url = '{{ route('profilehub.admin.countries.delete') }}';
                         var deleteIdName = 'id';
                         var deleteIdValue = row.country_id;
                         var backUrlName = 'backUrl';
-                        var backUrlValue = '{{ route('profilehub::admin.countries') }}';
+                        var backUrlValue = '{{ route('profilehub.admin.countries') }}';
                         const encodedcountry_name = encodeURIComponent(row.country_name);
                         const encodedcountry_code = encodeURIComponent(row.country_code);
                         const encodeddialing_code = encodeURIComponent(row.dialing_code);
@@ -148,11 +148,11 @@
                     name: 'delete',
                     render: function(data, type, row) {
                         //deleteModalTitle
-                        var del_url = '{{ route('profilehub::admin.countries.delete') }}';
+                        var del_url = '{{ route('profilehub.admin.countries.delete') }}';
                         var deleteIdName = 'id';
                         var deleteIdValue = row.country_id;
                         var backUrlName = 'backUrl';
-                        var backUrlValue = '{{ route('profilehub::admin.countries.index') }}';
+                        var backUrlValue = '{{ route('profilehub.admin.countries.index') }}';
                         return '<a href="#deleteModal" onClick="updateDeleteModal(\'Delete ' +
                             row.country_name + '\', \'Are you sure you want to delete this country? ' + row
                             .country_name + '\', \'' + del_url + '\', \'' + deleteIdName + '\', \'' +

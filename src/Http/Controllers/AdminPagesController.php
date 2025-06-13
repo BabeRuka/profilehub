@@ -6,15 +6,15 @@ use Illuminate\Http\Request;
 use Auth;
 use BabeRuka\ProfileHub\Models\Pages;
 use BabeRuka\ProfileHub\Repository\UserFunctions;
-use BabeRuka\ProfileHub\Models\User;
+use App\Models\User;
 use BabeRuka\ProfileHub\Models\PageModules;
 use BabeRuka\ProfileHub\Models\PageData;
 use BabeRuka\ProfileHub\Models\PageWidgets;
-use BabeRuka\ProfileHub\Models\UserFieldGroups;
-use BabeRuka\ProfileHub\Models\UserFieldSonData;
-use BabeRuka\ProfileHub\Models\UserFieldSon;
+use App\Models\UserFieldGroups;
+use App\Models\UserFieldSonData;
+use App\Models\UserFieldSon;
 use BabeRuka\ProfileHub\Models\Countries;
-use BabeRuka\ProfileHub\Models\UserInputTypes;
+use App\Models\UserInputTypes;
 use BabeRuka\ProfileHub\Models\Roles;
 use DB;
 
@@ -38,7 +38,7 @@ class AdminPagesController extends Controller
     public function index(Request $request)
     { 
         $user = Auth::user(); 
-        return view('profilehub.vendor.admin.pages.dashboard',[
+        return view('vendor.profilehub.admin.pages.dashboard',[
             'module_id' => $this->module_id,
             'module_name' => $this->module_name,
             'module_slug' => $this->module_slug,
@@ -78,7 +78,7 @@ class AdminPagesController extends Controller
         //$page_input_settings;
         $page_title = 'Pages';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub.vendor.admin.pages.edit', [
+        return view('vendor.profilehub.admin.pages.edit', [
             'user' => $user,
             'page' => $page,
             'admin' => $admin,
@@ -149,7 +149,7 @@ class AdminPagesController extends Controller
                 }
             }
         }
-        $request->session()->flash('message', $msg);
+        session()->flash('message', $msg);
         return redirect()->back();
     }
     function image_store($request)

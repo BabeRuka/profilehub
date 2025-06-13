@@ -4,7 +4,7 @@ namespace BabeRuka\ProfileHub\Http\Controllers;
 
 use Illuminate\Http\Request;
 use BabeRuka\ProfileHub\Repository\UserFunctions;
-use App\Models\Users; 
+use BabeRuka\ProfileHub\Models\Users; 
 use Auth; 
 use DB;
 use Illuminate\Support\Facades\Validator;  

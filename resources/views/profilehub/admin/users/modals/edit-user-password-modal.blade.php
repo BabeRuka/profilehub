@@ -5,7 +5,7 @@
             data-bs-keyboard="false">
             <div class="modal-dialog modal-fullscreen modal-halfpage" role="document">
                 <div class="modal-content">
-                    <form class="needs-validation" action="{{ route('profilehub::admin.users.createrecord') }}" id="permForm" mult method="POST" enctype="multipart/form-data" novalidate>
+                    <form class="needs-validation" action="{{ route('profilehub.admin.users.createrecord') }}" id="permForm" mult method="POST" enctype="multipart/form-data" novalidate>
                         <input type="hidden" name="function" id="function" value="create-group-name" />
                         <input type="hidden" name="user_id" id="user_id_password" value="0" />
                         @csrf

@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 @inject('userdetails', 'BabeRuka\ProfileHub\Models\UserFieldDetails')
     @inject('UserFunctions', 'BabeRuka\ProfileHub\Repository\UserFunctions')
         @section('css')
@@ -151,7 +151,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <form class="needs-validation"
-                        action="{{ route('profilehub::admin.users.createrecord') }}" id="forceform"
+                        action="{{ route('profilehub.admin.users.createrecord') }}" id="forceform"
                         method="POST" enctype="multipart/form-data" novalidate>
                         @method('POST')
                         @csrf

@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 @inject('userdetails', 'BabeRuka\ProfileHub\Models\UserFieldDetails')
 @section('content')
     <form class="needs-validation" action="{{ 'register' }}" method="POST" enctype="multipart/form-data" novalidate>
@@ -202,7 +202,7 @@
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-md-8">
                                         <button class="btn btn-danger active float-right ms-3" id="submitBtn"
                                             type="submit">{{ __('Save') }}</button>
-                                        <a href="{{ route('profilehub::admin.users') }}"
+                                        <a href="{{ route('profilehub.admin.users') }}"
                                             class="btn btn-primary active float-right ms-3">{{ __('Cancel') }}</a>
                                     </div>
                                 </div>

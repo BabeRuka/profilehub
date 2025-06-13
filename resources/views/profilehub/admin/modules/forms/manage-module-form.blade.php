@@ -1,4 +1,4 @@
-<form class="needs-validation" action="{{ route('profilehub::admin.modules.update') }}" method="POST" novalidate>
+<form class="needs-validation" action="{{ route('profilehub.admin.modules.update') }}" method="POST" novalidate>
     <input type="hidden" name="function" value="update-module" />
     @csrf
     @method('POST')

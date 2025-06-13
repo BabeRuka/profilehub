@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 @inject('UserFunctions', 'BabeRuka\ProfileHub\Repository\UserFunctions')
 @section('content')
     <div class="container-fluid">
@@ -18,7 +18,7 @@
                             </div>
                         </div>
                         <hr />
-                        <form class="needs-validation" action="{{ route('profilehub::admin.modules.createrecord') }}" method="POST"
+                        <form class="needs-validation" action="{{ route('profilehub.admin.modules.createrecord') }}" method="POST"
                             enctype="multipart/form-data" novalidate>
                             <input type="hidden" name="function" value="manage-group-settings" />
                             @csrf @method('POST')
@@ -74,7 +74,7 @@
                                                         </td>
                                                         <td><?php echo $status; ?></td>
                                                         <td>
-                                                            <a href="{{ route('profilehub::admin.modules', ['group_id' => $group->group_id]) }}"
+                                                            <a href="{{ route('profilehub.admin.modules', ['group_id' => $group->group_id]) }}"
                                                                 class=""><i
                                                                     class="ri-cursor-fill active active"></i></a>
                                                         </td>

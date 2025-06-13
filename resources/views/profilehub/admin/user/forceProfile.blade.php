@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 @inject('userdetails', 'BabeRuka\ProfileHub\Models\UserFieldDetails')
 @inject('UserFunctions', 'BabeRuka\ProfileHub\Repository\UserFunctions')
 @section('css')
@@ -50,7 +50,7 @@ $custom_inputs = $UserFunctions->input_type_group('custom');
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-md-8">
                                             <button class="btn btn-danger active float-right ml-3" type="submit"
                                                 id="saveProfile">{{ __('Save') }}</button>
-                                            <a href="{{ Route::currentRouteName() == 'profile.edit' ? route('profilehub::profile.index') : route('profilehub::admin.users') }}"
+                                            <a href="{{ Route::currentRouteName() == 'profile.edit' ? route('profilehub::profile.index') : route('profilehub.admin.users') }}"
                                                 class="btn btn-primary active float-right  ml-3">{{ __('Return') }}</a>
                                         </div>
                                     </div>
@@ -85,7 +85,7 @@ $custom_inputs = $UserFunctions->input_type_group('custom');
                                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-md-8">
                                                     <button class="btn btn-danger active float-right ml-3" type="submit"
                                                         id="saveProfile">{{ __('Save') }}</button>
-                                                    <a href="{{ Route::currentRouteName() == 'profile.edit' ? route('profilehub::profile.index') : route('profilehub::admin.users') }}"
+                                                    <a href="{{ Route::currentRouteName() == 'profile.edit' ? route('profilehub::profile.index') : route('profilehub.admin.users') }}"
                                                         class="btn btn-primary active float-right  ml-3">{{ __('Return') }}</a>
                                                 </div>
                                             </div>
@@ -113,7 +113,7 @@ $custom_inputs = $UserFunctions->input_type_group('custom');
                                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-md-8">
                                                     <button class="btn btn-danger active float-right ml-3" type="submit"
                                                         id="saveProfile">{{ __('Save') }}</button>
-                                                    <a href="{{ Route::currentRouteName() == 'profile.edit' ? route('profilehub::profile.index') : route('profilehub::admin.users') }}"
+                                                    <a href="{{ Route::currentRouteName() == 'profile.edit' ? route('profilehub::profile.index') : route('profilehub.admin.users') }}"
                                                         class="btn btn-primary active float-right  ml-3">{{ __('Return') }}</a>
                                                 </div>
                                             </div>
@@ -151,7 +151,7 @@ $custom_inputs = $UserFunctions->input_type_group('custom');
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-md-8">
                                                 <button class="btn btn-danger active float-right ml-3" type="submit"
                                                     id="saveProfile">{{ __('Save') }}</button>
-                                                <a href="{{ Route::currentRouteName() == 'profile.edit' ? route('profilehub::profile.index') : route('profilehub::admin.users') }}"
+                                                <a href="{{ Route::currentRouteName() == 'profile.edit' ? route('profilehub::profile.index') : route('profilehub.admin.users') }}"
                                                     class="btn btn-primary active float-right  ml-3">{{ __('Return') }}</a>
                                             </div>
                                         </div>

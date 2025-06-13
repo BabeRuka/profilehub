@@ -1,4 +1,4 @@
-<form class="needs-validation" action="{{ route('profilehub::admin.modules.createrecord') }}" method="POST" novalidate>
+<form class="needs-validation" action="{{ route('profilehub.admin.modules.createrecord') }}" method="POST" novalidate>
     <input type="hidden" name="function" value="update-widget" />
     @csrf
     @method('POST')

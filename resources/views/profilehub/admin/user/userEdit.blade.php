@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 @inject('userdetails', 'BabeRuka\ProfileHub\Models\UserFieldDetails')
 @inject('UserFunctions', 'BabeRuka\ProfileHub\Repository\UserFunctions')
 @php
@@ -179,7 +179,7 @@ $custom_inputs = $UserFunctions->input_type_group('custom');
 
     <div class="modal fade" id="delTableModal" tabindex="-1" role="dialog" aria-labelledby="delTableModalModalLabel"
         aria-modal="true">
-        <form action="{{ route('profilehub::admin.users.profile.userdetails.createrecord', ['id' => 0]) }}" id="delTableModalModalForm"
+        <form action="{{ route('profilehub.admin.users.groups.userdetails.createrecord', ['id' => 0]) }}" id="delTableModalModalForm"
             method="POST" novalidate="">
             <input type="hidden" name="function" value="del-table-data" />
             <input type="hidden" name="page_row" id="page_row_del" value="0" />

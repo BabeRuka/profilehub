@@ -5,7 +5,7 @@ namespace BabeRuka\ProfileHub\Http\Controllers\Auth;
 use BabeRuka\ProfileHub\Http\Controllers\Controller;
 use BabeRuka\ProfileHub\Http\Controllers\UserDetailsController;
 use App\Models\User;
-use BabeRuka\ProfileHub\Models\UserDetails;
+use App\Models\UserDetails;
 
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;

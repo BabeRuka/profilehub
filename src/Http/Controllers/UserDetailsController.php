@@ -36,7 +36,7 @@ class UserDetailsController extends Controller
 
     public function userDetailsModel()
     {
-        $fields = new Userdetails();
+        $fields = new UserFieldDetails();
         return $fields;
     }
     public function index()
@@ -49,7 +49,7 @@ class UserDetailsController extends Controller
         $page_title = 'Additional Fields';
         $page_title = $page_title ? $page_title : $this->page_title;
         $user_id = Auth::id();
-        return view('profilehub.vendor.admin.users.profile.usersDetails')->with(compact(['user_fields', 'user_field_type', 'user_groups', 'page_perm','page_title']));
+        return view('vendor.profilehub.admin.users.profile.usersDetails')->with(compact(['user_fields', 'user_field_type', 'user_groups', 'page_perm','page_title']));
     }
 
     public function userfield(Request $request)
@@ -91,7 +91,7 @@ class UserDetailsController extends Controller
         $user_id = Auth::id();
         $page_title = 'Additional Fields';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub.vendor.admin.users.profile.userFieldGroups')->with(compact(['user_groups', 'page_perm','page_title']));
+        return view('vendor.profilehub.admin.users.profile.userFieldGroups')->with(compact(['user_groups', 'page_perm','page_title']));
     }
 
     public function children(Request $request)
@@ -106,7 +106,7 @@ class UserDetailsController extends Controller
         $page_title = $page_title ? $page_title : $this->page_title;
         $UserfieldGroups = new UserfieldGroups();
         $group = $UserfieldGroups->find($id);
-        return view('profilehub.vendor.admin.users.profile.groupChildren', compact('group', 'children', 'page_perm','page_title'));
+        return view('vendor.profilehub.admin.users.profile.groupChildren', compact('group', 'children', 'page_perm','page_title'));
     }
     public function childrenData(Request $request){
         $son_id = $request->input('son_id');
@@ -212,7 +212,7 @@ class UserDetailsController extends Controller
                 $field_details->where(['field_id' => $request->input('field_id'), 'user_id' => $request->input('user_id')])->update(['user_rows' => $num_rows]);
                 $user_details = new UserfieldDetails();
                 $user_entry = $user_details->where(['field_id' => $request->input('field_id'), 'user_id' => $request->input('user_id')])->update(['user_entry' => $num_rows]);
-                $request->session()->flash('message', 'your action was completed successfully');
+                session()->flash('message', 'your action was completed successfully');
                 return redirect()->back();
             }
 
@@ -230,7 +230,7 @@ class UserDetailsController extends Controller
                     $son_data->save();
                     $count++;
                 }
-                $request->session()->flash('message', 'your action was completed successfully');
+                session()->flash('message', 'your action was completed successfully');
                 return redirect()->back();
             }
 
@@ -262,7 +262,7 @@ class UserDetailsController extends Controller
                     $count++;
                 }
 
-                $request->session()->flash('message', 'your action was completed successfully');
+                session()->flash('message', 'your action was completed successfully');
                 return redirect()->back();
             }
 
@@ -270,7 +270,7 @@ class UserDetailsController extends Controller
             
             $son_data = new UserFieldSon();
             $son_data->where(['son_id' => $request->input('son_id')])->delete();
-            $request->session()->flash('message', 'your action was completed successfully');
+            session()->flash('message', 'your action was completed successfully');
             return redirect()->back();
         }
             //son settinggs
@@ -283,7 +283,7 @@ class UserDetailsController extends Controller
                 $field_settings = array('date_plugin' => $date_plugin, 'date_plugin_format' => $date_plugin_format);
                 $son_data->field_settings = json_encode($field_settings, true);
                 $son_data->save();
-                $request->session()->flash('message', 'your action was completed successfully');
+                session()->flash('message', 'your action was completed successfully');
                 return redirect()->back();
             }
             if ($request->input('function') == 'add-user-field-son-range-data') {
@@ -295,7 +295,7 @@ class UserDetailsController extends Controller
                 $field_settings = array('start_range' => $start_range, 'end_range' => $end_range);
                 $son_data->field_settings = json_encode($field_settings, true);
                 $son_data->save();
-                $request->session()->flash('message', 'your action was completed successfully');
+                session()->flash('message', 'your action was completed successfully');
                 return redirect()->back();
             }
             if ($request->input('function') == 'add-user-field-son-widget-data') {
@@ -308,7 +308,7 @@ class UserDetailsController extends Controller
                 $field_settings = array('input_type' => $input_type, 'dropdown_type' => $dropdown_type, 'dropdown_value' => $dropdown_value);
                 $son_data->field_settings = json_encode($field_settings, true);
                 $son_data->save();
-                $request->session()->flash('message', 'your action was completed successfully');
+                session()->flash('message', 'your action was completed successfully');
                 return redirect()->back();
             }
             if ($request->input('function') == 'fix-son-sequence') {
@@ -322,7 +322,7 @@ class UserDetailsController extends Controller
                     $son->save();
                     $count++;
                 }
-                $request->session()->flash('message', 'your action was completed successfully');
+                session()->flash('message', 'your action was completed successfully');
                 return redirect()->back();
             }
             if ($request->input('function') == 'create-user-file') {
@@ -337,8 +337,8 @@ class UserDetailsController extends Controller
                     //add a new record
                     $fields->add_user_field($request->all());
                 }
-                $request->session()->flash('message', 'your action was completed successfully');
-                return redirect()->action('UserdetailsController@index');
+                session()->flash('message', 'your action was completed successfully');
+                return redirect()->action('UserDetailsController@index');
             } elseif ($request->input('function') == 'create-user-field-son') {
                 $request->validate([
                     'translation' => 'required',
@@ -355,32 +355,32 @@ class UserDetailsController extends Controller
                     $fields->add_user_field_son($request, $sequence);
                 }
                 
-                $request->session()->flash('message', 'your action was completed successfully');
+                session()->flash('message', 'your action was completed successfully');
                 return redirect()->back();
             } elseif ($request->input('function') == 'delete-user-field') {
                 if ($request->post('son_id') > 0) {
                     $fields->down_user_field_son($request->post('son_id'));
-                    $request->session()->flash('message', 'your action was completed successfully');
+                    session()->flash('message', 'your action was completed successfully');
                     return redirect()->back();
                 } else {
                     $fields->down_user_field($request->post('field_id'));
-                    $request->session()->flash('message', 'your action was completed successfully');
+                    session()->flash('message', 'your action was completed successfully');
                     return redirect()->back();
                 }
             } elseif ($request->input('function') == 'create-group-name') {
                 if ($request->post('group_id') > 0) {
                     $fields->up_user_group($request->post('group_id'));
-                    $request->session()->flash('message', 'your action was completed successfully');
+                    session()->flash('message', 'your action was completed successfully');
                     return redirect()->back();
                 } else {
                     $fields->add_user_group($request->post('group_id'));
-                    $request->session()->flash('message', 'your action was completed successfully');
+                    session()->flash('message', 'your action was completed successfully');
                     return redirect()->back();
                 }
             } elseif ($request->input('function') == 'delete-user-group') { 
                 if ($request->post('group_id') > 0) {
                     $fields->down_user_group($request->post('group_id'));
-                    $request->session()->flash('message', 'your action was completed successfully');
+                    session()->flash('message', 'your action was completed successfully');
                     return redirect()->back();
                 }
             } elseif ($request->input('function') == 'manage-user') {
@@ -422,8 +422,8 @@ class UserDetailsController extends Controller
                 return redirect()->route('profilehub::users.index');
             } else {
                 //
-                $request->session()->flash('message', 'your action was completed successfully');
-                return redirect()->action('UserdetailsController@index');
+                session()->flash('message', 'your action was completed successfully');
+                return redirect()->action('UserDetailsController@index');
             }
         }
 
@@ -443,7 +443,7 @@ class UserDetailsController extends Controller
                     }
                 }
             }
-            return redirect()->action('UserdetailsController@children', ['id' => $request->post('group_id')]);
+            return redirect()->action('UserDetailsController@children', ['id' => $request->post('group_id')]);
         }
     }
 
@@ -471,7 +471,7 @@ class UserDetailsController extends Controller
         //echo $replace[0]->field_id . ' replace';
         //die();
         $table_name = ($type == 'field-parent' ? 'user_field' : 'user_field');
-        $redirect = ($type == 'field-parent' ? 'UserdetailsController@index' : 'UserdetailsController@children');
+        $redirect = ($type == 'field-parent' ? 'UserDetailsController@index' : 'UserDetailsController@children');
         $table_collumn = ($type == 'field-parent' ? 'sequence' : 'group_sequence');
         $redirect_id = ($type == 'field-parent' ? '' : $request->input('group'));
 

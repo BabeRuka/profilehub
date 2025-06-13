@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 <?php
 $url_img = url('files/pages/banners/');
 $page_image = $page_data->where('page_key', 'page_image');

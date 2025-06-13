@@ -5,7 +5,7 @@
             data-bs-keyboard="false">
             <div class="modal-dialog modal-fullscreen modal-halfpage" role="document" style="overflow: scroll;">
                 <div class="modal-content">
-                    <form method="POST" action="{{ route('profilehub::admin.users.profile.userdetails.createrecord') }}"
+                    <form method="POST" action="{{ route('profilehub.admin.users.groups.userdetails.createrecord') }}"
                         id="createGroupForm" enctype="multipart/form-data" class="needs-validation" accesskey="" novalidate>
                         <input type="hidden" name="function" value="manage-user-detail" />
                         <input type="hidden" name="user_id" id="user_id_details_id" value="0" />

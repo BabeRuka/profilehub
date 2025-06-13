@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 <?php
 //dd($type_group);
 $group_type = $type_group->where(['type_key' => 'user'])->get();
@@ -40,7 +40,7 @@ $group_type = $type_group->where(['type_key' => 'user'])->get();
                                         <td>{{ $group->group_name }}</td>
                                         <td><?php echo $admin->firstname ?> <?php echo $admin->lastname  ?></td>
                                         <td>
-                                            <a data-groupid="{{ $group->group_id }}" href="{{ route('profilehub::admin.users.groups.groupusers',['group_id' => $group->group_id]) }}" class="btn btn-primary">
+                                            <a data-groupid="{{ $group->group_id }}" href="{{ route('profilehub.admin.users.groups.groupusers',['group_id' => $group->group_id]) }}" class="btn btn-primary">
                                                 <?php echo count($course_users) ?> Users <i class="fa fa-users"></i>
                                             </a>
                                         </td>
@@ -54,7 +54,7 @@ $group_type = $type_group->where(['type_key' => 'user'])->get();
 
                                         <td>
                                             @if( $you->id !== $group->group_admin )
-                                            <form name="DeleteGroupForm{{ $group->group_id }}" id="DeleteGroupForm{{ $group->group_id }}" action="{{ route('profilehub::admin.groups.createrecord') }}" method="POST">
+                                            <form name="DeleteGroupForm{{ $group->group_id }}" id="DeleteGroupForm{{ $group->group_id }}" action="{{ route('profilehub.admin.groups.createrecord') }}" method="POST">
                                                 <input type="hidden" name="function" id="function{{ $group->group_id }}" value="del-group" />
                                                 <input type="hidden" name="group_admin" id="group_admin{{ $group->group_id }}" value="{{ $group->group_admin }}" />
                                                 <input type="hidden" name="group_id" id="group_id{{ $group->group_id }}" value="{{ $group->group_id }}" />
@@ -89,7 +89,7 @@ $group_type = $type_group->where(['type_key' => 'user'])->get();
 <div class="modal fade" id="addUserGroup" class="group-form" tabindex="-1" role="dialog" aria-labelledby="addUserGroupLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
-        <form id="userGroupForm" class="needs-validations" action="{{ route('profilehub::admin.groups.createrecord') }}" method="POST" novalidate>
+        <form id="userGroupForm" class="needs-validations" action="{{ route('profilehub.admin.groups.createrecord') }}" method="POST" novalidate>
           @csrf
           @method('POST')
           <input type="hidden" name="function" id="add_users_group_function" value="add-user-to-group" />
@@ -134,7 +134,7 @@ $group_type = $type_group->where(['type_key' => 'user'])->get();
   </div>
   <!-- Modal end -->
   <?php  ?>
-  <form name="DeleteCourseGroupForm" id="DeleteCourseGroupForm" action="{{ route('profilehub::admin.groups.createrecord') }}" method="POST">
+  <form name="DeleteCourseGroupForm" id="DeleteCourseGroupForm" action="{{ route('profilehub.admin.groups.createrecord') }}" method="POST">
     <input type="hidden" name="function" id="function-cgd" value="del-user-group-user" />
     <input type="hidden" name="group_id" id="dcgf-pidv" value="" />
     <input type="hidden" name="user_id" id="dcgf-fidv" value="" />
@@ -400,7 +400,7 @@ $group_type = $type_group->where(['type_key' => 'user'])->get();
        console.log(group_id);
        $.ajax({
           type:'POST',
-          url:"{{ route('profilehub::admin.ajax.groups.users') }}",
+          url:"{{ route('profilehub.admin.ajax.groups.users') }}",
           async: false,
           data:{ 'group_id' : group_id},
           success:function(data) {

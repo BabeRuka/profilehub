@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 
 @section('title', 'Manage Additional Fields')
 @section('content')
@@ -15,7 +15,7 @@
                             <i class="fa fa-solid fa-align-justify"></i> Additional Fields - {{ $group->group_name }}
                         </h5>
 
-                        <a href="{{ route('profilehub::admin.users.profile.groups')}}"
+                        <a href="{{ route('profilehub.admin.users.profile.groups')}}"
                                     class="btn btn-primary text-light waves-effect waves-light">
                                     <i class="ri-add-circle-fill ms-1"></i>
                                     <span class="ms-1">Back to all groups</span>
@@ -23,7 +23,7 @@
                     </div>
                     <hr />
                     <div class="card-body">
-                        <form class="needs-validation" action="{{ route('profilehub::admin.users.profile.userdetails.manage') }}" method="POST" novalidate>
+                        <form class="needs-validation" action="{{ route('profilehub.admin.users.profile.userdetails.manage') }}" method="POST" novalidate>
                             @csrf
                             @method('POST')
                             <input type="hidden" name="group_id" id="group_id"
@@ -52,7 +52,7 @@
                                                         <td>
                                                             @if($page_perm['update'])
                                                                 <a class=""
-                                                                    href="{{ route('profilehub::admin.users.profile.userdetails.manage.move', ['id' => $child->field_id, 'group' => $child->group_id, 'seq' => ($child->group_sequence ? $child->group_sequence : $child->field_id), 'type' => 'field-child', 'dir' => 'up']) }}">
+                                                                    href="{{ route('profilehub.admin.users.profile.userdetails.manage.move', ['id' => $child->field_id, 'group' => $child->group_id, 'seq' => ($child->group_sequence ? $child->group_sequence : $child->field_id), 'type' => 'field-child', 'dir' => 'up']) }}">
                                                                     <i class="ri-arrow-up-double-line"></i>
                                                                 </a>
                                                             @endif
@@ -66,7 +66,7 @@
                                                         <td>
                                                             @if($page_perm['update'])
                                                                 <a class=""
-                                                                    href="{{ route('profilehub::admin.users.profile.userdetails.manage.move', ['id' => $child->field_id, 'group' => $group_id, 'seq' => ($child->group_sequence ? $child->group_sequence : $child->field_id), 'type' => 'field-child', 'dir' => 'down']) }}">
+                                                                    href="{{ route('profilehub.admin.users.profile.userdetails.manage.move', ['id' => $child->field_id, 'group' => $group_id, 'seq' => ($child->group_sequence ? $child->group_sequence : $child->field_id), 'type' => 'field-child', 'dir' => 'down']) }}">
                                                                     <i class="ri-arrow-down-double-line"></i>
                                                                 </a>
                                                             @endif

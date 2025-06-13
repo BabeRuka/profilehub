@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 @inject('userdetails', 'BabeRuka\ProfileHub\Models\UserFieldDetails')
 
 <?php //{{ dd($userdetails_body) }}
@@ -16,7 +16,7 @@
                             <div>
 
                                 <a class="btn btn-primary text-light waves-effect waves-light"
-                                    href="{{ route('profilehub::admin.users.create') }}">
+                                    href="{{ route('profilehub.admin.users.createrecord') }}">
                                     <i class="ri-add-circle-fill ms-1"></i> <span class="ms-1">Add User</span>
                                 </a>
                             </div>
@@ -61,6 +61,7 @@
 
 
     @section('javascript')
+     <script src="{{ asset('addons/datatables/bootstrap5/js/datatables.min.js') }} "></script>
         <script>
             $(function() {
                 $('[data-toggle="tooltip"]').tooltip()
@@ -77,7 +78,7 @@
                     },
                     ajax: ({
                         type: "POST",
-                        url: '{{ route('profilehub::admin.users.userdata') }}'
+                        url: '{{ route('profilehub.admin.users.userdata') }}'
                     }),
                     "lengthMenu": [
                         [10, 25, 50, -1],
@@ -155,11 +156,11 @@
                             name: 'profile',
                             render: function(data, type, row) {
                                 //deleteModalTitle
-                                var del_url = '{{ route('profilehub::admin.users.destroy') }}';
+                                var del_url = '{{ route('profilehub.admin.users.destroy') }}';
                                 var deleteIdName = 'id';
                                 var deleteIdValue = row.id;
                                 var backUrlName = 'backUrl';
-                                var backUrlValue = '{{ route('profilehub::admin.users') }}';
+                                var backUrlValue = '{{ route('profilehub.admin.users') }}';
                                 const encodedUserBio = encodeURIComponent(row.user_bio);
                                 const encodedUserName = encodeURIComponent(row.username);
                                 const encodedName = encodeURIComponent(row.name);
@@ -179,11 +180,11 @@
                             name: 'delete',
                             render: function(data, type, row) {
                                 //deleteModalTitle
-                                var del_url = '{{ route('profilehub::admin.users.destroy') }}';
+                                var del_url = '{{ route('profilehub.admin.users.destroy') }}';
                                 var deleteIdName = 'id';
                                 var deleteIdValue = row.id;
                                 var backUrlName = 'backUrl';
-                                var backUrlValue = '{{ route('profilehub::admin.users') }}';
+                                var backUrlValue = '{{ route('profilehub.admin.users') }}';
                                 return '<a href="#deleteModal" onClick="updateDeleteModal(\'Delete ' +
                                     row.name + '\', \'Are you sure you want to delete this user? ' + row
                                     .name + '\', \'' + del_url + '\', \'' + deleteIdName + '\', \'' +

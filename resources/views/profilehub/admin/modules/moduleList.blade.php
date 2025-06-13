@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 
 @section('content')
 
@@ -20,7 +20,7 @@
                             </div>
                         </div>
                         <hr />
-                        <form class="needs-validation" action="{{ route('profilehub::admin.modules.createrecord') }}" method="POST"
+                        <form class="needs-validation" action="{{ route('profilehub.admin.modules.createrecord') }}" method="POST"
                             enctype="multipart/form-data" novalidate>
                             <input type="hidden" name="function" id="function" value="manage-role-types" />
                             @csrf @method('POST')

@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 @inject('userdetails', 'BabeRuka\ProfileHub\Models\UserFieldDetails')
 
 <?php //{{ dd($userdetails_body) }} ?>
@@ -15,7 +15,7 @@
                         <a class="btn btn-primary active float-right" data-toggle="modal" data-target="#bulkImportModal" >
                             Bulk Import
                         </a>
-                        <a class="btn btn-primary active float-right mr-3" href="{{ route('profilehub::admin.users.create') }}">
+                        <a class="btn btn-primary active float-right mr-3" href="{{ route('profilehub.admin.users.createrecord') }}">
                             Add User
                         </a>
                       @endif
@@ -58,12 +58,12 @@
                                 </a>
                               </td>
                               <td>
-                                <a href="{{ route('profilehub::admin.users.manage.roles', ['user_id' => $user->id]) }}" class="btn btn-primary">
+                                <a href="{{ route('profilehub.admin.users.manage.roles', ['user_id' => $user->id]) }}" class="btn btn-primary">
                                     <i class="c-icon cil-key active"></i>
                                 </a>
                               </td>
                               <td>
-                                <a href="{{ route('profilehub::admin.users.manage.roles', ['user_id' => $user->id]) }}" class="btn btn-primary">
+                                <a href="{{ route('profilehub.admin.users.manage.roles', ['user_id' => $user->id]) }}" class="btn btn-primary">
                                     <i class="c-icon cil-lock-locked active"></i>
                                 </a>
                               </td>
@@ -94,7 +94,7 @@
           </div>
         </div>
         @if($page_perm['delete'])
-            <form action="{{ route('profilehub::admin.users.destroy') }}" name="del_user" id="del_user" method="POST">
+            <form action="{{ route('profilehub.admin.users.destroy') }}" name="del_user" id="del_user" method="POST">
                 <input type="hidden" name="id" id="del_user_id" value="0" />
                 @method('DELETE')
                 @csrf
@@ -105,7 +105,7 @@
             <div class="modal fade" id="bulkImportModal" tabindex="-1" role="dialog" aria-labelledby="bulkImportLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <form class="needs-validation" action="{{ route('profilehub::admin.users.import.parse') }}" id="bulkImportForm" mult method="POST" enctype="multipart/form-data" novalidate>
+                        <form class="needs-validation" action="{{ route('profilehub.admin.users.import.parse') }}" id="bulkImportForm" mult method="POST" enctype="multipart/form-data" novalidate>
                             @method('POST')
                             @csrf
                             <div class="modal-header">
@@ -197,7 +197,7 @@
                 },
                 ajax: ({
                     type: "POST",
-                    url: '{{ route('profilehub::admin.users.userdata') }}'
+                    url: '{{ route('profilehub.admin.users.userdata') }}'
                 }),
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 dom: 'Blfrtip',

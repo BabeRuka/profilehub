@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 
 @section('content')
 
@@ -64,7 +64,7 @@
                               @if($field->sequence != 1)
                                 <td>
                                     @if($page_perm['update'])
-                                        <a class="" href="{{route('profilehub::admin.users.profile.userdetails.manage.move',['id'=> $field->field_id, 'seq'=>  ($field->sequence ? $field->sequence : $field->field_id), 'type'=> 'field-parent', 'dir'=> 'up']) }}">
+                                        <a class="" href="{{route('profilehub.admin.users.profile.userdetails.manage.move',['id'=> $field->field_id, 'seq'=>  ($field->sequence ? $field->sequence : $field->field_id), 'type'=> 'field-parent', 'dir'=> 'up']) }}">
                                         <i class="ri-arrow-up-double-line"></i>
                                         </a>
                                     @endif
@@ -78,7 +78,7 @@
                             @else
                               <td>
                                   @if($page_perm['update'])
-                                    <a class="" href="{{route('profilehub::admin.users.profile.userdetails.manage.move',['id'=> $field->field_id, 'seq'=>  ($field->sequence ? $field->sequence : $field->field_id), 'type'=> 'field-parent', 'dir'=> 'down', 'group'=> $field->group_id, ])}}">
+                                    <a class="" href="{{route('profilehub.admin.users.profile.userdetails.manage.move',['id'=> $field->field_id, 'seq'=>  ($field->sequence ? $field->sequence : $field->field_id), 'type'=> 'field-parent', 'dir'=> 'down', 'group'=> $field->group_id, ])}}">
                                     <i class="ri-arrow-down-double-line"></i>
                                     </a>
                                   @endif
@@ -86,7 +86,7 @@
                             @endif
                             <td>
                               @if($field->type_field =='dropdown' || $field->type_field =='yesno' || $field->type_field =='table')
-                                <a href="{{ route('profilehub::admin.users.profile.field', ['id' => $field->field_id, 'name' => $field->type_field]) }}" class="">
+                                <a href="{{ route('profilehub.admin.users.profile.field', ['id' => $field->field_id, 'name' => $field->type_field]) }}" class="">
                                   <i class="ri-cursor-fill"></i>
                                 </a>
                               @endif
@@ -105,7 +105,7 @@
                                     
                                          
                                         <a href="#deleteModal"
-                                        onclick="updateDeleteModal('Delete User Field {{ $field->translation }}', 'Are you sure you want to delete this user profile field?','{{ route('profilehub::admin.users.profile.userdetails.destroy') }}','field_id','{{ $field->field_id }}','back_url','{{ route('profilehub::admin.users.profile.fields') }}')"
+                                        onclick="updateDeleteModal('Delete User Field {{ $field->translation }}', 'Are you sure you want to delete this user profile field?','{{ route('profilehub.admin.users.profile.userdetails.destroy') }}','field_id','{{ $field->field_id }}','back_url','{{ route('profilehub.admin.users.profile.fields') }}')"
                                         data-bs-target="#deleteModal" data-bs-toggle="modal" type="button" class="DeleteUserField" data-bb-example-key="confirm-options" data-fieldid="DeleteUserFieldForm{{ $field->field_id }}" >
                                         <i class="ri-delete-bin-5-line text-danger"></i>
                                         </a> 

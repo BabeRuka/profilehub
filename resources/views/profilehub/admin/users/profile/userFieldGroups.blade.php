@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 @section('css')
     <style>
 
@@ -62,7 +62,7 @@
                                             <td scope="col">{{ $group->create_date }}</td>
                                             <td scope="col" class="">
                                                 @if ($page_perm['view'])
-                                                    <a href="{{ route('profilehub::admin.users.profile.groups.children', ['id' => $group->group_id]) }}"
+                                                    <a href="{{ route('profilehub.admin.users.profile.groups.children', ['id' => $group->group_id]) }}"
                                                         class="">
                                                         <i class="ri-cursor-fill text-primary"></i>
                                                     </a>
@@ -84,7 +84,7 @@
                                                 @if ($page_perm['delete'])
                                                     <a href="#deleteModal" data-bs-target="#deleteModal" data-bs-toggle="modal"
                                                             data-fieldid="DeleteUserGroupForm{{ $group->group_id }}"
-                                                            onclick="updateDeleteModal('Delete Profile Group {{ $group->group_name }}', 'Are you sure you want to delete this Profile Group?','{{ route('profilehub::admin.users.profile.userdetails.destroyGroup') }}','group_id','{{ $group->group_id }}','back_url','{{ route('profilehub::admin.users.profile.groups') }}')"
+                                                            onclick="updateDeleteModal('Delete Profile Group {{ $group->group_name }}', 'Are you sure you want to delete this Profile Group?','{{ route('profilehub.admin.users.profile.userdetails.destroyGroup') }}','group_id','{{ $group->group_id }}','back_url','{{ route('profilehub.admin.users.profile.groups') }}')"
                                                             class="DeleteUserField">
                                                             <i class="ri-delete-bin-5-fill text-danger"></i>
                                                     </a>

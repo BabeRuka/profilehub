@@ -5,7 +5,7 @@
             data-bs-keyboard="false">
             <div class="modal-dialog modal-fullscreen modal-halfpage" role="document">
                 <div class="modal-content"> 
-                    <form method="POST" action="{{ route('profilehub::admin.users.profile.userdetails.createrecord') }}"
+                    <form method="POST" action="{{ route('profilehub.admin.users.groups.userdetails.createrecord') }}"
                         id="createGroupForm" class="needs-validation" accesskey="" novalidate>
                         <input type="hidden" name="function" value="create-group-name" />
                         <input type="hidden" name="group_id" value="0" />

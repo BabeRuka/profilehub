@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use Session;
-use BabeRuka\ProfileHub\Models\User;
+use App\Models\User;
 use BabeRuka\ProfileHub\Models\UserGroups;
 use BabeRuka\ProfileHub\Models\UserGroupUsers; 
 use BabeRuka\ProfileHub\Models\PasswordResets;
@@ -14,7 +14,7 @@ use BabeRuka\ProfileHub\Http\Controllers\UsersController;
 use BabeRuka\ProfileHub\Models\Users;
 use BabeRuka\ProfileHub\Models\UserField;
 use BabeRuka\ProfileHub\Models\UserProfiles;
-use BabeRuka\ProfileHub\Models\Groups; 
+use BabeRuka\ProfileHub\Models\UserInputTypes; 
 use BabeRuka\ProfileHub\Http\Controllers\AdminController;  
 use BabeRuka\ProfileHub\Http\Controllers\Auth\RegisterController;  
 use Hash;
@@ -45,24 +45,23 @@ class AdminUsersController extends Controller
     public function index(Request $request): View|Response
     { 
         $page_perm = $this->admin->allPageRoles($this->module_slug);
-        $request->session()->put('page_perm', $page_perm);
+        session()->put('page_perm', $page_perm);
         $you = auth()->user();
-        $all = new Users();
-        $users = $all->whereNull('deleted_at')->get();
+        $Users = new User();
+        $users = $Users->orderBy('id','desc')->get(); 
         $detail = new UsersController();
-        $userdetails_headers = $detail->userDetailsTable(null, 1);
-        $user = $all->find(1);
+        $userdetails_headers = $detail->userDetailsTable(null, 1); 
         $all_users = array();
         $userdetails_cols = array();
 
         foreach ($userdetails_headers as $key => $value) {
             $userdetails_cols[$key]['col_name'] = $this->stripAll($value->translation);
         }
-        $array = $users->toArray();
+        //$array = $users->toArray();
         $all_users = (object)$all_users;
         $page_title = 'Users';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub.vendor.admin.users.users', compact('page_title', 'users', 'you', 'userdetails_headers', 'userdetails_cols', 'page_perm'));
+        return view('vendor.profilehub.admin.users.users', compact('page_title', 'users', 'you', 'userdetails_headers', 'userdetails_cols', 'page_perm'));
     }
     function walk($val, $key, $new_array)
     {
@@ -78,11 +77,11 @@ class AdminUsersController extends Controller
         $groups = $groups->all();
         $group_users = new UserGroupUsers();
         $users = User::all();
-        $type_group = new Groups();
+        $type_group = new UserInputTypes();
         $you = auth()->user();
         $page_title = 'Groups';
-        $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub.vendor.admin.users.usersGroups', compact('page_title', 'you', 'type_group', 'groups', 'users', 'group_users', 'page_perm'));
+        $page_title = $page_title ? $page_title : $this->page_title; 
+        return view('vendor.profilehub.admin.users.userGroups', compact('page_title', 'you', 'type_group', 'groups', 'users', 'group_users', 'page_perm'));
     }
     public function group(Request $request): View|Response
     { 
@@ -97,7 +96,7 @@ class AdminUsersController extends Controller
         $you = auth()->user();
         $page_title = 'Group';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('profilehub.vendor.admin.users.usersGroup', compact('page_title', 'you', 'groups', 'group_users', 'page_perm'));
+        return view('vendor.profilehub.admin.users.userGroup', compact('page_title', 'you', 'groups', 'group_users', 'page_perm'));
     }
     public function createrecord(Request $request)
     {
@@ -191,7 +190,7 @@ class AdminUsersController extends Controller
                 $profile->save();
             }
             $message = 'your action was completed successfully';
-            $request->session()->flash('message', $message);
+            session()->flash('message', $message);
             return redirect()->back();
         }
         if ($function_id > 0) {
@@ -200,7 +199,7 @@ class AdminUsersController extends Controller
             $message = 'your action was not completed successfully';
         }
          
-        $request->session()->flash('message',  $message);
+        session()->flash('message',  $message);
         return redirect()->back(); 
     }
     
@@ -214,7 +213,7 @@ class AdminUsersController extends Controller
         return datatables()->of($users)
             ->addColumn('view', function ($row) {
                 $page_perm = session('page_perm');
-                $html = '<a href="' . route('profilehub::admin.users.user', ['id' => $row->id]) . '" class="" data-toggle="tooltip" data-placement="top" title="View">
+                $html = '<a href="' . route('profilehub.admin.users.user', ['id' => $row->id]) . '" class="" data-toggle="tooltip" data-placement="top" title="View">
                         <i class="ri-cursor-fill"></i>
                     </a>';
                 return ($page_perm['view'] ? $html : '&nbsp');
@@ -236,7 +235,7 @@ class AdminUsersController extends Controller
 
             ->addColumn('edit', function ($row) {
                 $page_perm = session('page_perm');
-                $html = '<a href="' . route('profilehub::admin.users.user.edit', ['id' => $row->id]) . '" class="EditAnything" data-formid="edit_user" data-fieldid="' . $row->id . '" data-rowid="edit_user_id" data-msg="Are you sure you want to edit this user  ' . $row->name . '" class="" data-toggle="tooltip" data-placement="top" title="Edit ' . $row->name . '">
+                $html = '<a href="' . route('profilehub.admin.users.user.edit', ['id' => $row->id]) . '" class="EditAnything" data-formid="edit_user" data-fieldid="' . $row->id . '" data-rowid="edit_user_id" data-msg="Are you sure you want to edit this user  ' . $row->name . '" class="" data-toggle="tooltip" data-placement="top" title="Edit ' . $row->name . '">
                         <i class="ri-edit-circle-fill text-primary"></i>
                     </a>';
                 return ($page_perm['update'] ? $html : '&nbsp');
@@ -246,8 +245,8 @@ class AdminUsersController extends Controller
                 $title = 'Delete ' . $row->name. '';
                 $deleteIdName = 'id';
                 $message = 'Are you sure you want to delete this user? ' . $row->name . ' ';
-                $formAction = route('profilehub::admin.users.destroy') ;
-                $back_url = route('profilehub::admin.users');
+                $formAction = route('profilehub.admin.users.destroy') ;
+                $back_url = route('profilehub.admin.users');
                 $html = '<a href="#deleteModal" data-bs-toggle="modal" data-bs-target="#deleteModal" onClick="updateDeleteModal(\'' . $title . '\', \'' . $message . '\', \'' . $formAction . '\', \'' . $deleteIdName . '\', \'' . $row->id . '\', \'' . $back_url . '\')" class="" data-formid="deleteForm" data-fieldid="' . $row->id . '" data-rowid="deleteId" data-msg="Are you sure you want to delete this user [' . $row->name . ' ]" data-toggle="tooltip" data-placement="top" title="Delete [' . $row->name . '">
                             <i class="ri-delete-bin-5-line text-danger"></i>
                         </a>';
@@ -284,7 +283,7 @@ class AdminUsersController extends Controller
         u.updated_at 
         FROM users AS u 
         LEFT JOIN user_details AS ud ON ud.user_id = u.id
-        WHERE u.deleted_at IS NULL " . $queryj . "";
+        WHERE u.id IS NOT NULL " . $queryj . "";
         return $query;
     }
     function stripAll($strip)

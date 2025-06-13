@@ -1,4 +1,4 @@
-<form class="needs-validation" action="{{ route('profilehub::admin.modules.createrecord') }}" id="pubSettingsForm" method="POST"
+<form class="needs-validation" action="{{ route('profilehub.admin.modules.createrecord') }}" id="pubSettingsForm" method="POST"
     novalidate>
     @csrf
     @method('POST')

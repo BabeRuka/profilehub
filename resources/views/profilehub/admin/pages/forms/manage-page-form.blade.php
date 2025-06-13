@@ -1,4 +1,4 @@
-<form class="needs-validation" action="{{ route('profilehub::admin.layout.createrecord') }}" method="POST" id="addRoleForm" novalidate>
+<form class="needs-validation" action="{{ route('profilehub.admin.layout.createrecord') }}" method="POST" id="addRoleForm" novalidate>
     <input type="hidden" name="function" value="add-page">
     @csrf
 

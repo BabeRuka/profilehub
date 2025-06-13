@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 @php
     //$all_categories = $data['all_categories'];
 @endphp

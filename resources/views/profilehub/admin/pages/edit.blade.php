@@ -1,4 +1,4 @@
-@extends('profilehub::layouts.app')
+@extends('vendor.profilehub.layouts.admin')
 @inject('userdetails', 'BabeRuka\ProfileHub\Models\UserDetails')
 @inject('UserFunctions', 'BabeRuka\ProfileHub\Repository\UserFunctions')
 @inject('UserAdmin', 'BabeRuka\ProfileHub\Repository\UserAdmin')
@@ -31,12 +31,12 @@
                     <h5 class="card-title text-uppercase fw-bold"><i class="fa fa-align-justify"></i> Edit Page
                         [{{ request('page_name') }}]</h5>
                     <div>
-                        <a href="{{ route('profilehub::admin.layout.pages') }}" class="btn btn-primary float-right"><i
+                        <a href="{{ route('profilehub.admin.layout.pages') }}" class="btn btn-primary float-right"><i
                                 class="fa fa-solid fa-backward me-2"></i> Back to all pages</a>
                     </div>
                 </div>
                 <hr />
-                <form class="needs-validation" method="POST" action="{{ route('profilehub::admin.layout.pages.createrecord') }}"
+                <form class="needs-validation" method="POST" action="{{ route('profilehub.admin.layout.pages.createrecord') }}"
                     method="POST" enctype="multipart/form-data" novalidate>
                     <div class="card-body">
                         <div class="row">
