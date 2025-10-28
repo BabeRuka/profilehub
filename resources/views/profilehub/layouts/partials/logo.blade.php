@@ -1,0 +1,1 @@
+<img src="{{ asset('images/logo/Profilehub-Logo.png') }}" alt="Laravel Profilehub Logo">

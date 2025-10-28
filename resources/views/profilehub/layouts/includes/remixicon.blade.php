@@ -1,0 +1,1 @@
+<link href="{{ asset('vendor/profilehub/fonts/remixicon/v4.6.0/remixicon.css') }}" rel="stylesheet">
