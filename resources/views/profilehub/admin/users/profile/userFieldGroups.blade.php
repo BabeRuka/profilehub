@@ -25,15 +25,9 @@
                                 </button>
                             @endif
                         </div>
-                    </div>
-                    <hr />
- 
+                    </div>  
                         <div class="card-body">
-
-
-                            <!-- Button trigger modal -->
-
-                           
+                            <!-- Button trigger modal -->                          
                             @if ($message = Session::get('success'))
                                 <div class="alert alert-success">
                                     <p>{{ $message }}</p>
@@ -107,7 +101,7 @@
     @endif
 @endsection
 @section('javascript')
-
+<script src="{{ asset('vendor/profilehub/addons/datatables/bootstrap5/js/datatables.min.js') }}"></script>
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function () {

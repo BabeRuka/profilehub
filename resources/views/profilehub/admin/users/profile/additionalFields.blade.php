@@ -21,7 +21,6 @@
                                     <span class="ms-1">Back to all groups</span>
                         </a>
                     </div>
-                    <hr />
                     <div class="card-body">
                         <form class="needs-validation" action="{{ route('profilehub.admin.users.profile.userdetails.manage') }}" method="POST" novalidate>
                             @csrf

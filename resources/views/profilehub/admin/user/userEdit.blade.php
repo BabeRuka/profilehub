@@ -12,6 +12,7 @@ $html_inputs = $UserFunctions->input_type_group('html');
 $custom_inputs = $UserFunctions->input_type_group('custom');
 @endphp
 @section('css')
+<link rel="stylesheet" href="{{ asset('vendor/profilehub/addons/dropify/css/dropify.min.css') }}"></link>
 @endsection
 
 @section('content')
@@ -216,13 +217,13 @@ $custom_inputs = $UserFunctions->input_type_group('custom');
             </div>
         </form>
     </div>
+@include('profilehub::admin.modals.delete-modal')
 @endsection
 
 @section('javascript')
-     
-    <script src="{{ asset('addons/dropify/js/dropify.min.js') }}"></script>
-    <script src="{{ asset('addons/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-    </script>
+    <script src="{{ asset('vendor/profilehub/addons/datatables/bootstrap5/js/datatables.min.js') }}"></script>
+    <script src="{{ asset('vendor/profilehub/addons/dropify/js/dropify.min.js') }}"></script>
+    <script src="{{ asset('vendor/profilehub/addons/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
 
     <script>
         function pwdStrengthChecker(usrPassword) {
@@ -275,12 +276,24 @@ $custom_inputs = $UserFunctions->input_type_group('custom');
         }
         function popDelTable(field_id, rowid, title) {
             //17,1,'Country','Education History'
-            document.getElementById('title_del').innerHTML =
-                '<i class="fa fa-exclamation-circle text-danger" aria-hidden="true"></i> Please confirm delete!';
-            document.getElementById('msg_del').innerHTML = 'Please confirm if you want to delete row #' + rowid + ' of ' +
-                title + ' user details table ';
+            document.getElementById('title_del').innerHTML = '<i class="fa fa-exclamation-circle text-danger" aria-hidden="true"></i> Please confirm delete!';
+            var msg = 'Please confirm if you want to delete row #' + rowid + ' of ' + title + ' user details table ';
+            console.log(msg);
+            document.getElementById('msg_del').innerHTML = msg;
             document.getElementById('page_row_del').value = rowid;
             document.getElementById('field_id_del').value = field_id;
+        }
+
+        function renumberClonedFields() {
+            const allRows = document.querySelectorAll('.clone-field');
+            allRows.forEach((rowElement, index) => {
+                const newRowNumber = index + 1;
+                const numberDisplay = rowElement.querySelector('.tablenum');
+                if (numberDisplay) {
+                    numberDisplay.textContent = newRowNumber;
+                    numberDisplay.setAttribute('data-tablerow', newRowNumber);
+                }
+            });
         }
         $(function() {
             $(".bootstrap_datepicker").datepicker({
@@ -318,6 +331,7 @@ $custom_inputs = $UserFunctions->input_type_group('custom');
                         'fa fa-minus mdi-minus-circle-outline text-danger remove-field');
                     attach_fileName();
                     attach_delete();
+                    renumberClonedFields();
                     clones++;
                 }
             });
@@ -347,7 +361,7 @@ $custom_inputs = $UserFunctions->input_type_group('custom');
         });
   
         window.jQuery || document.write(
-            '<script src="{{ asset('addons/material-design/js/jquery-3.3.1.slim.min.js') }}"><\/script>')
+            '<script src="{{ asset('vendor/profilehub/addons/material-design/js/jquery-3.3.1.slim.min.js') }}"><\/script>')
  
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {
@@ -387,8 +401,8 @@ $custom_inputs = $UserFunctions->input_type_group('custom');
             }, false);
         })();
     </script>
-     
-    <script src="{{ asset('addons/tinymce/5.8.1/js/tinymce.min.js') }}" referrerpolicy="origin"></script>
+
+    <script src="{{ asset('vendor/profilehub/addons/tinymce/5.8.1/js/tinymce.min.js') }}" referrerpolicy="origin"></script>
     <script>
         function stringify(x) {
             console.log(Object.prototype.toString.call(x));
@@ -453,10 +467,6 @@ $custom_inputs = $UserFunctions->input_type_group('custom');
                 $('#cPwdId').prop('required', false);
             }
         });
-        $(document).ready(function() {
-            $('#assignRolestable').DataTable({
-                "scrollX": false
-            });
-        });
+         
     </script>
 @endsection

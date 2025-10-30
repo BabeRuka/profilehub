@@ -72,7 +72,7 @@
                                     : asset('vendor/profilehub/images/avatar-blue.png');
                                     echo '<img class="img-thumbnail" src="' . $profile_pic . '" alt="card image">';
                                 } else {
-                                    echo stripslashes($value);
+                                    echo stripslashes($user_detail->$detail);
                                 }
                                 $num_filled = $user_detail->$detail ? $num_filled + 1 : $num_filled + 0;
                             }else{

@@ -55,14 +55,16 @@ class AdminUserDetailsController extends Controller
         $page_perm = $this->admin->allPageRoles($this->module_slug); 
         $group_id = $request->input('group_id') ?? 0;
         $fields = $this->UserFieldDetailsModel();
-        $user_fields = $fields->user_field();
+        
         $user_field_type = $fields->user_field_type();
         $user_groups = $fields->user_field_groups();
         $UserFieldGroups = new UserFieldGroups();
         if($group_id > 0){
             $group = $UserFieldGroups->find($group_id);
+            $user_fields = $fields->user_field(null, $group_id);
         }else{
             $group = null;
+            $user_fields = $fields->user_field();
         }
         $page_title = 'Additional Fields';
         $page_title = $page_title ? $page_title : $this->page_title;
@@ -87,9 +89,10 @@ class AdminUserDetailsController extends Controller
         $page_title = 'Additional Field';
         $page_title = $page_title ? $page_title : $this->page_title;
         return view(
-            'admin.users.profile.usersDetailsField',
+            'vendor.profilehub.admin.users.profile.usersDetailsField',
             [
                 'group' => $group,
+                'group_id' => $field->group_id,
                 'field' => $field,
                 'user_fields' => $user_fields,
                 'user_field_type' => $user_field_type,
@@ -235,10 +238,8 @@ class AdminUserDetailsController extends Controller
     }
     public function createrecord(Request $request, $bypass = false)
     {
-        $fields = $this->UserFieldDetailsModel();
-        
+        $fields = $this->UserFieldDetailsModel(); 
         if ($request->input('function') != '') {
-
             if ($request->input('function') == 'manage-user-detail') {
                 $profile_pic = $this->save_profile_picture($request); 
                 $user_avatar = $this->save_user_avatar($request);
@@ -314,14 +315,14 @@ class AdminUserDetailsController extends Controller
                 return redirect()->back();
             }
 
-        if ($request->input('function') == 'delete-user-field-son') {
-            
-            $son_data = new UserFieldSon();
-            $son_data->where(['son_id' => $request->input('son_id')])->delete();
-            session()->flash('message', 'your action was completed successfully');
-            //dd($request->post());
-            return redirect()->back();
-        }
+            if ($request->input('function') == 'delete-user-field-son') {
+                
+                $son_data = new UserFieldSon();
+                $son_data->where(['son_id' => $request->input('son_id')])->delete();
+                session()->flash('message', 'your action was completed successfully');
+                //dd($request->post());
+                return redirect()->back();
+            }
             //son settinggs
             if ($request->input('function') == 'add-user-field-son-date-data') {
 
@@ -373,10 +374,7 @@ class AdminUserDetailsController extends Controller
                 }
                 session()->flash('message', 'your action was completed successfully');
                 return redirect()->back();
-            }
-
-            
-
+            } 
             if ($request->input('function') == 'create-user-file') {
                 
                 $request->validate([
@@ -454,38 +452,29 @@ class AdminUserDetailsController extends Controller
                     $user->save();
                 }
                 $user_id = $request->post('user_id'); 
-
-                if ($user_id > 0) {
-                    foreach ($request->input('user_entry') as $key => $value) {
-                        $user_details = new UserFieldDetails();
-                        $user_entry = $user_details->where(['field_id' => $key, 'user_id' => $user_id])->first();
-                        if ($user_entry == null) {
-                            $user_details->user_id = $user_id;
-                            $user_details->field_id = $key;
-                            $user_details->user_entry = $value;
-                            $user_details->create_date = date('Y-m-d h:m:s');
-                            $user_details->modified_date = date('Y-m-d h:m:s');
-                            $user_details->save();
-                        } else {
-                            $user_entry->user_id = $user_id;
-                            $user_entry->field_id = $key;
-                            $user_entry->user_entry = $value;
-                            $user_details->create_date = date('Y-m-d h:m:s');
-                            $user_entry->modified_date = date('Y-m-d h:m:s');
-                            $user_entry->save();
-                        }
-                    }
+                $user_entry = $request->post('user_entry');
+                if ($user_entry) { 
+                    $this->controlUserEntry($user_entry, $user_id);
+                }
+                $this->upUserDetailsTableData($user_id,$request);
+                $son_entry = $request->post('son_entry');
+                
+                if ($son_entry) { 
+                    $this->controlSonEntry($son_entry, $user_id);
                 }
                 if ($bypass == 'bypass') {
                     return $user_id;
                 }
-                return redirect()->route('profilehub::users.index');
-            } else {
+                dd($son_entry); 
                 session()->flash('message', 'your action was completed successfully');
-                return redirect()->route('profilehub::admin.users.profile.fields');
+                return redirect()->route('profilehub.admin.users.user', ['id' => $user_id]);
+            } else {
+                return redirect()->back();
             }
+            session()->flash('message', 'your action was not completed. Please try again.');
+            return redirect()->back();
         }
-
+        return redirect()->back();
     }
     public function manage(Request $request)
     {
@@ -685,6 +674,164 @@ class AdminUserDetailsController extends Controller
         }
         session()->flash('message', 'your action was not completed successfully');
         return redirect()->back();
+    }
+    function controlSonEntry($son_entry, $user_id)
+    {
+        foreach ($son_entry as $field_id => $son_data) {
+            // Calculate total user_rows for this field
+            $user_rows = 0;
+            foreach ($son_data as $son_id => $entry_values) {
+                $non_null_count = count(array_filter($entry_values, function($value) {
+                    return $value !== null && $value !== '';
+                }));
+                $user_rows = max($user_rows, $non_null_count);
+            }
+
+            foreach ($son_data as $son_id => $entry_values) {
+                // Process each value in the array for this son_id
+                foreach ($entry_values as $sequence_index => $entry_value) {
+                    // Skip null or empty values
+                    if ($entry_value === null || $entry_value === '') {
+                        continue;
+                    }
+
+                    $sequence = $sequence_index + 1; // Sequence starts from 1
+                    
+                    $user_details = new UserFieldDetailsData();
+                    // Check if record already exists
+                    $user_entry = $user_details->where([
+                        'field_id' => $field_id,
+                        'user_id'  => $user_id,
+                        'son_id'   => $son_id,
+                        'sequence' => $sequence,
+                    ])->first();
+
+                    $details_data = json_encode([
+                        'field_id'    => $field_id,
+                        'son_id'      => $son_id,
+                        'user_id'     => $user_id,
+                        'sequence'    => $sequence,
+                        'user_entry'  => $entry_value,
+                    ]);
+                    //ensure empty values are not saved
+                    if($entry_value!= null || $entry_value != '') {
+                        if ($user_entry === null) {
+                            // Create new record
+                            $user_details->user_id       = $user_id;
+                            $user_details->field_id      = $field_id;
+                            $user_details->son_id        = $son_id;
+                            $user_details->user_entry    = $entry_value;
+                            $user_details->details_data  = $details_data;
+                            $user_details->sequence      = $sequence;
+                            $user_details->user_rows     = $user_rows;
+                            $user_details->create_date   = date('Y-m-d H:i:s');
+                            $user_details->modified_date = date('Y-m-d H:i:s');
+                            $user_details->save();
+                        } else {
+                            // Update existing record
+                            $user_entry->user_id       = $user_id;
+                            $user_entry->field_id      = $field_id;
+                            $user_entry->son_id        = $son_id;
+                            $user_entry->user_entry    = $entry_value;
+                            $user_entry->details_data  = $details_data;
+                            $user_entry->sequence      = $sequence;
+                            $user_entry->user_rows     = $user_rows;
+                            $user_entry->modified_date = date('Y-m-d H:i:s');
+                            $user_entry->save();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    function controlUserEntry($user_entry, $user_id) 
+    {
+        foreach ($user_entry as $key => $value) {
+            $user_details = new UserFieldDetails();
+            $existing_entry = $user_details->where(['field_id' => $key, 'user_id' => $user_id])->first();
+            
+            if ($existing_entry == null) {
+                $user_details->user_id = $user_id;
+                $user_details->field_id = $key;
+                $user_details->user_entry = $value;
+                $user_details->create_date = date('Y-m-d H:i:s');
+                $user_details->modified_date = date('Y-m-d H:i:s');
+                $user_details->save();
+            } else {
+                $existing_entry->user_id = $user_id;
+                $existing_entry->field_id = $key;
+                $existing_entry->user_entry = $value;
+                $existing_entry->modified_date = date('Y-m-d H:i:s');
+                $existing_entry->save();
+            }
+        }
+    }
+    public function deleteUserFieldData(Request $request){ 
+        $sequence = $request->post('sequence');
+        $field_id = $request->post('field_id');
+        $user_id = $request->input('user_id');
+        $UserFieldDetailsData = new UserFieldDetailsData();
+        $UserFieldDetailsData->where(['sequence' => $sequence, 'field_id' => $field_id, 'user_id' => $user_id])->delete();
+        $this->reset_user_field_details_sequence($field_id, $user_id);
+        session()->flash('message', 'your action was completed successfully');
+        return redirect()->back();
+    }
+    public function reset_user_field_details_sequence($field_id, $user_id)
+    {
+        $UserFieldDetailsData = new UserFieldDetailsData();
+
+        // Find distinct sequence groups for this field and user (ordered)
+        $distinctSequences = $UserFieldDetailsData
+            ->where('field_id', $field_id)
+            ->where('user_id', $user_id)
+            ->orderBy('sequence', 'asc')
+            ->distinct()
+            ->pluck('sequence')
+            ->toArray();
+
+        // If there are no rows, ensure summary is cleared and return 0
+        if (empty($distinctSequences)) {
+            $userFieldDetails = new UserFieldDetails();
+            $found = $userFieldDetails->where(['field_id' => $field_id, 'user_id' => $user_id])->first();
+            if ($found) {
+                $found->user_entry = 0;
+                $found->modified_date = date('Y-m-d H:i:s');
+                $found->save();
+            }
+            return 0;
+        }
+
+        // Build a mapping old_sequence => new_sequence (1..N)
+        $sequenceMap = [];
+        $newSeq = 1;
+        foreach ($distinctSequences as $oldSeq) {
+            $sequenceMap[$oldSeq] = $newSeq;
+            $newSeq++;
+        }
+
+        // Update rows: for each old sequence value, set all rows having that sequence to the new sequence
+        foreach ($sequenceMap as $old => $new) {
+            $UserFieldDetailsData->where(['field_id' => $field_id, 'user_id' => $user_id, 'sequence' => $old])
+                ->update(['sequence' => $new, 'modified_date' => date('Y-m-d H:i:s')]);
+        }
+
+        // New total groups (sequences) after reindexing
+        $new_count = count($sequenceMap);
+
+        // Update user_rows on all remaining detail rows to reflect the new number of grouped rows
+        $UserFieldDetailsData->where(['field_id' => $field_id, 'user_id' => $user_id])
+            ->update(['user_rows' => $new_count, 'modified_date' => date('Y-m-d H:i:s')]);
+
+        // Ensure the summary entry in user_field_details reflects new row count
+        $userFieldDetails = new UserFieldDetails();
+        $found = $userFieldDetails->where(['field_id' => $field_id, 'user_id' => $user_id])->first();
+        if ($found) {
+            $found->user_entry = $new_count;
+            $found->modified_date = date('Y-m-d H:i:s');
+            $found->save();
+        }
+
+        return $new_count;
     }
     
 }

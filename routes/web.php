@@ -75,6 +75,7 @@ Route::prefix('profilehub')->group(function () {
             Route::delete('/userdetails/destroyGroup', [AdminUserDetailsController::class, 'destroyGroup'])->name('profilehub.admin.users.profile.userdetails.destroyGroup');
             Route::post('/userdetails/manage', [AdminUserDetailsController::class, 'manage'])->name('profilehub.admin.users.profile.userdetails.manage');
             Route::get('/userdetails/manage/move', [AdminUserDetailsController::class, 'move'])->name('profilehub.admin.users.profile.userdetails.manage.move');
+            Route::post('/userdetails/deleteData', [AdminUserDetailsController::class, 'deleteUserFieldData'])->name('profilehub.admin.users.profile.userdetails.deleteData');
         });
 
     });

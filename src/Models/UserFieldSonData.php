@@ -13,4 +13,21 @@ class UserFieldSonData extends Model
     public $incrementing = true;
     const CREATED_AT = 'create_date';
     const UPDATED_AT = 'modified_date';
+
+    protected $fillable = [
+        'son_id',
+        'data_key',
+        'data_value',
+        'data',
+        'data_sequence',
+        'create_date',
+        'modified_date',
+    ];
+
+    protected $casts = [
+        'data_id' => 'integer',
+        'son_id' => 'integer',
+        'create_date' => 'datetime',
+        'modified_date' => 'datetime',
+    ];
 }

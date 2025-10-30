@@ -1,10 +1,11 @@
 @php
 $sequence = 1;
-//$user_fields = $user_fields->where('field_id',$table[0]->field_id)->first();
 @endphp
-<div class="row">
+
+@if($detailsdata_rows > 0)
+<div class="row mb-6">
 @for ($td = 0; $td < $detailsdata_rows; $td++)
-    <div class="row">
+    <div class="row mb-3 dynamic-element">
         <div class="col-1 text-center">{{ $td + 1 }}</div>
         <div class="col-10">
             <div class="row">
@@ -15,7 +16,16 @@ $sequence = 1;
                                 <div class="form-group">
                                     <label for="son_entry_{{$td + 1}}_{{ $table->field_id }}_{{ $table->son_id }}">{{ $table->translation }}</label>
                                     @php
-                                        $user_entry = $userdetails->one_userfield_details_data($table->field_id, $table->son_id, $sequence, $user->id);
+                                        $user_data = $userdetails->userfield_details_data($table->field_id, $table->son_id, $sequence, $user->id);
+                                        if($user_data != null) {
+                                            $user_entry = $user_data[0]->user_entry;
+                                            $sequence = $user_data[0]->sequence; 
+                                            $field_id = $user_data[0]->field_id;
+                                        } else {
+                                            $user_entry = '';
+                                            $sequence = 0;
+                                            $field_id = 0;
+                                        }
                                         $page_settings = $page_data->where('page_key', 'son_input_settings');
                                         $page_settings = $page_settings->where('page_module', $table->son_id);
 
@@ -101,18 +111,17 @@ $sequence = 1;
             </div>
         </div>
         <div class="col-1">
-            <a href="javascript:void(0)"
-                onclick="popDelTable({{ $table->field_id }},{{ $sequence }},'{{ $field->translation }}')"
-                data-toggle="modal" data-target="#delTableModal"><i class="fa fa-trash text-danger"></i></a>
+            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="updateDeleteModal('Delete Row', 'Are you sure you want to delete this row?', '{{ route('profilehub.admin.users.profile.userdetails.deleteData', ['user_id' => $user->id]) }}', 'sequence', {{ $sequence }}, 'field_id', '{{ $field_id }}', 'POST', delFunction = false)"><i class="fa fa-trash text-danger"></i></a>
         </div>
-        <hr />
+         
     </div>
     @php
         $sequence++;
     @endphp
 @endfor
 </div>
-<div class="row dynamic-element pt-1">
+@endif
+<div class="row dynamic-element pt-1 mb-3">
     <div class="col-1 tablenum" data-tablerow="@php echo $sequence ; @endphp">@php echo $sequence ; @endphp</div>
     <div class="col-10">
         <div class="row">
@@ -213,6 +222,6 @@ $sequence = 1;
         <a href="javascript:void(0)"><i class="fa fa-plus clone-field mdi mdi-plus-circle-outline text-success"></i></a>
     </div>
     <hr />
-</div>
-<div class="cloned-data">
-</div>
+</div> 
+
+<div class="cloned-data"></div>

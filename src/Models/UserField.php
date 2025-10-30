@@ -12,6 +12,17 @@ class UserField extends Model
     const CREATED_AT = 'create_date';
     const UPDATED_AT = 'modified_date';
 
+    protected $fillable = [
+        'type_field',
+        'lang_code',
+        'translation',
+        'group_id',
+        'sequence',
+        'group_sequence',
+        'create_date',
+        'modified_date',
+    ];
+
     public function user_field_son()
     {
         return $this->belongsTo('BabeRuka\ProfileHub\Models\UserFieldSon','field_id');

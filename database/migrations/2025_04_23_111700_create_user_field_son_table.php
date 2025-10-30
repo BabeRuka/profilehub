@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('user_field_son', function (Blueprint $table) {
-            $table->integer('son_id', true);
-            $table->integer('field_id')->default(0)->index('field_id');
+            $table->unsignedInteger('son_id', true);
+            $table->unsignedInteger('field_id')->default(0)->index('field_id');
             $table->string('lang_code', 50)->nullable()->default('');
             $table->string('translation')->default('');
             $table->enum('field_type', ['text', 'data', 'json', 'number', 'string', 'dropdown', 'date', 'widget'])->default('text');

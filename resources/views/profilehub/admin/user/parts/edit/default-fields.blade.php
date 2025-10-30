@@ -1,4 +1,5 @@
 @php
+$page_data_default = $page_data;
 $group_settings = $page_data->where('page_module', 'default');
 $group_enabled = $group_settings->first() ? $group_settings->where('page_key', 'group_enabled') : null;
 $genabled = $group_enabled != null && $group_enabled->first() ? ($group_enabled->first()->page_data > 0 ? 1 : 0) : 0;
@@ -41,9 +42,7 @@ $glayout = $group_layout != null && $group_layout->first() ? $group_layout->firs
                                 @if ($input_type == 'textarea')
                                     <textarea type="text" id="{{ $default }}" name="{{ $default }}" class="form-control"
                                         placeholder="Enter your {{ $default }}..." {{ $input_required }}>@php echo $has_detail  @endphp</textarea>
-                                    @php
-                                        echo '</div>';
-                                    @endphp
+                                    
                                 @elseif ($input_type == 'dropdown')
                                     <select type="text" id="{{ $default }}" name="{{ $default }}"
                                         class="form-control" placeholder="Enter your {{ $default }}..."
@@ -94,80 +93,87 @@ $glayout = $group_layout != null && $group_layout->first() ? $group_layout->firs
 
 
         <div class="row">
+            
             @foreach ($default_user_details as $default)
                 @php
                      
                     $input_enabled = 1;
-
-                    $input_required = $page_settings->first() ? $page_settings->where('page_key', 'page_input_required') : null;
-                    $input_required = $input_required->first() ? ($input_required->first()->page_data > 0 ? 'required' : '') : '';
-
-                    $input_settings = $page_settings->first() ? $page_settings->where('page_key', 'page_input_settings') : null;
-                    $input_settings = $input_settings->first() && $input_settings->first()->page_data ? json_decode($input_settings->first()->page_data) : null;
-                    $input_type = $input_settings != null ? $input_settings->input : 'text'; 
+                    $page_settings = $page_data_default->where('page_module', $default);
+                    $input_required_setting = $page_settings->where('page_key', 'page_input_required')->first();
+                    $input_required = $input_required_setting && $input_required_setting->page_data > 0 ? 'required' : '';
+                    $input_settings_row = $page_settings->where('page_key', 'page_input_settings')->first();
+                    $input_settings = null;
+                    if ($input_settings_row && $input_settings_row->page_data) {
+                        $input_settings = json_decode($input_settings_row->page_data);
+                    }
+                    $input_type = $input_settings !== null && isset($input_settings->input) ? $input_settings->input : 'text';
                 @endphp
                 @if ($input_enabled > 0)
-                    <div class="{{ $input_type == 'textarea' ? 'col-12' : $group_input }} mb-3">
+                    @if($default == 'profile_pic' || $default == 'user_avatar')
+                     <!-- do nothing for now -->
+                    @else
+                        <div class="{{ $input_type == 'textarea' ? 'col-12' : $group_input }} mb-3">
 
-                        <label class=""
-                            for="{{ $default }}">{{ ucwords($UserFunctions->userprofile_lang($default)) }}
-                        </label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                @php
-                                    $user_value = optional($user_detail)->$default;
-                                    $required = $input_required ? 'required' : '';
-                                    $placeholder = "Enter your " . ucwords(str_replace('_', ' ', $default)) . "...";
-                                @endphp
-
-                                @if ($input_type == 'textarea')
-                                    <textarea type="text" id="{{ $default }}" name="{{ $default }}" class="form-control"
-                                        placeholder="Enter your {{ $placeholder }}..." {{ $input_required }}>@php echo $user_value  @endphp</textarea>
+                            <label class=""
+                                for="{{ $default }}">{{ ucwords($UserFunctions->userprofile_lang($default)) }}  
+                            </label>
+                            <div class="form-group">
+                                <div class="form-line">
                                     @php
-                                        echo '</div>';
+                                        $user_value = optional($user_detail)->$default;
+                                        $required = $input_required ? 'required' : '';
+                                        $placeholder = "Enter your " . ucwords(str_replace('_', ' ', $default)) . "...";
                                     @endphp
-                                @elseif ($input_type == 'dropdown')
-                                    <select type="text" id="{{ $default }}" name="{{ $default }}"
-                                        class="form-control" placeholder="Enter your {{ $default }}..."
-                                        {{ $input_required }}>
 
-                                    </select>
-                                @elseif(in_array($input_type, $html_inputs))
-                                    @if ($input_type == 'file')
-                                        <input type="file" name="{{ $default }}" id="{{ $default }}"
-                                            data-show-loader="false" class="dropify"
-                                            data-default-file="{{ $profile_pic }}"
-                                            {{ $profile_pic == '' ? $input_required : '' }} />
-                                    @elseif ($input_type == 'image')
-                                        <input type="file" name="{{ $default }}" id="{{ $default }}"
-                                            data-show-loader="false" data-allowed-file-extensions="jpg png jpeg"
-                                            class="dropify" {{ $profile_pic == '' ? $input_required : '' }} />
-                                    @elseif ($input_type == 'range')
-                                        <input type="{{ $input_type }}" id="{{ $default }}"
-                                            name="{{ $default }}" value="{{ $user_value }}"
-                                            class="form-range" {{ $input_required }} />
-                                    @else
+                                    @if ($input_type == 'textarea')
+                                        <textarea type="text" id="{{ $default }}" name="{{ $default }}" class="form-control"
+                                            placeholder="Enter your {{ $placeholder }}..." {{ $input_required }}>@php echo $user_value  @endphp</textarea>
+                                        @php
+                                            echo '</div>';
+                                        @endphp
+                                    @elseif ($input_type == 'dropdown')
+                                        <select type="text" id="{{ $default }}" name="{{ $default }}"
+                                            class="form-control" placeholder="Enter your {{ $default }}..."
+                                            {{ $input_required }}>
+
+                                        </select>
+                                    @elseif(in_array($input_type, $html_inputs))
+                                        @if ($input_type == 'file')
+                                            <input type="file" name="{{ $default }}" id="{{ $default }}"
+                                                data-show-loader="false" class="dropify"
+                                                data-default-file="{{ $profile_pic }}"
+                                                {{ $profile_pic == '' ? $input_required : '' }} />
+                                        @elseif ($input_type == 'image')
+                                            <input type="file" name="{{ $default }}" id="{{ $default }}"
+                                                data-show-loader="false" data-allowed-file-extensions="jpg png jpeg"
+                                                class="dropify" {{ $profile_pic == '' ? $input_required : '' }} />
+                                        @elseif ($input_type == 'range')
+                                            <input type="{{ $input_type }}" id="{{ $default }}"
+                                                name="{{ $default }}" value="{{ $user_value }}"
+                                                class="form-range" {{ $input_required }} />
+                                        @else
+                                            <input type="text" id="{{ $default }}"
+                                                name="{{ $default }}" value="{{ $user_value }}"
+                                                class="form-control" placeholder="Enter your {{ $default }}..."
+                                                {{ $input_required }} />
+                                        @endif
+                                    @elseif(in_array($input_type, $custom_inputs))
                                         <input type="{{ $input_type }}" id="{{ $default }}"
                                             name="{{ $default }}" value="{{ $user_value }}"
                                             class="form-control" placeholder="Enter your {{ $default }}..."
                                             {{ $input_required }} />
+                                    @else
+                                        <input type="text" id="{{ $default }}" name="{{ $default }}"
+                                            value="{{ $user_value }}" class="form-control"
+                                            placeholder="Enter your {{ $default }}..." {{ $input_required }} />
                                     @endif
-                                @elseif(in_array($input_type, $custom_inputs))
-                                    <input type="{{ $input_type }}" id="{{ $default }}"
-                                        name="{{ $default }}" value="{{ $user_value }}"
-                                        class="form-control" placeholder="Enter your {{ $default }}..."
-                                        {{ $input_required }} />
-                                @else
-                                    <input type="text" id="{{ $default }}" name="{{ $default }}"
-                                        value="{{ $user_value }}" class="form-control"
-                                        placeholder="Enter your {{ $default }}..." {{ $input_required }} />
-                                @endif
-                                <div class="invalid-feedback">
-                                    {{ $default }} is required.
+                                    <div class="invalid-feedback">
+                                        {{ $default }} is required.
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 @endif
 
             @endforeach

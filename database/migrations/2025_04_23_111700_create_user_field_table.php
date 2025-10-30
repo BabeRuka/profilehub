@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('user_field', function (Blueprint $table) {
-            $table->integer('field_id', true);
+            $table->unsignedInteger('field_id', true);
             $table->integer('id_details')->nullable()->default(0)->index('id_common');
-            $table->integer('group_id')->nullable()->index('group_id');
+            $table->unsignedInteger('group_id')->nullable()->index('group_id');
             $table->string('type_field')->nullable()->index('type_field');
             $table->string('lang_code')->nullable()->default('eng');
             $table->string('translation')->default('')->index('translation');

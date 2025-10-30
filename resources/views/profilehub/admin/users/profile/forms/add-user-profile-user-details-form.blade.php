@@ -51,11 +51,7 @@
 
     <div class="col-md-12 mb-6 form-group">
         <label for="profile_pic">Profile Picture</label>
-        <input type="file" class="form-control" name="profile_pic" id="profile_pic" placeholder="Enter profile_pic..."
-            value="" data-allowed-file-extensions="jpg png jpeg" class="dropify"  required>
-        <div class="invalid-feedback">
-            Valid profile_pic is required.
-        </div>
+        <input type="file" class="form-control" name="profile_pic" id="profile_pic" placeholder="Enter profile_pic..." value="" data-allowed-file-extensions="jpg png jpeg" class="dropify" >
     </div>
  
 

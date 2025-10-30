@@ -389,6 +389,8 @@ class UserFunctions
             $cols = array('username', 'firstname', 'lastname');
         } else if ($limit == 'profile') {
             $cols = array('username','firstname','lastname','middle_name','user_bio','profile_pic','user_avatar');
+        } else if ($limit == 'profile-table') {
+            $cols = array('username','firstname','lastname','middle_name','user_bio');
         } else {
             $cols = array('username','firstname','lastname','middle_name','user_bio','profile_pic','user_avatar');
         }

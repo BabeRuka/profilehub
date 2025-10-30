@@ -131,19 +131,20 @@ class UsersController extends Controller
     public function userDetailsTable($id = false, $return_type = false)
     {
         $user_details = new UserFieldDetails();
-        $fields = $user_details->user_field();
-        //dd($fields);
+        $fields = $user_details->user_field(); 
         $field_headers = array();
         $field_body = array();
         $field_arr = array();
         foreach ($fields as $fk=>$fld) {
             $detail = $user_details->one_user_field_details($fld->field_id, $id);
-            //dd($detail);
             $field_headers[$id] = '<td>' . $fld->translation . '</td>';
             $translation = $this->stripAll($fld->translation);
             $field_arr[$fk][$translation] =  $detail;
+            $field_arr[$fk]['field_id'] =  $fld->field_id;
+            $field_arr[$fk]['type_field'] =  $fld->type_field;
             $field_body[$id] = $detail;
-        }
+            
+        } 
         if ($return_type == 1) {
             return $fields;
         }else if ($return_type == 3) {

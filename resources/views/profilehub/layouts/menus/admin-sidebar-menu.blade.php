@@ -72,13 +72,7 @@
                             <div class="d-flex justify-content-between w-100 align-items-center" data-i18n="Groups">
                                 Groups</div>
                         </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('profilehub.admin.users.groups.children.all') }}" class="menu-link">
-                            <div class="d-flex justify-content-between w-100 align-items-center" data-i18n="Additional Fields">
-                                Additional Fields</div>
-                        </a>
-                    </li>
+                    </li> 
                 </ul>
             </li>
 

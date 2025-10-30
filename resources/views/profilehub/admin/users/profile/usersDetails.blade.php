@@ -23,7 +23,6 @@
                             @endif
                         </div>
                     </div>
-                    <hr />
                     <div class="card-body">
                         <table class="table table-responsive-sm table-striped" id="datatables">
                         <thead>
@@ -75,7 +74,7 @@
                             @endif
                             <td>
                               @if($field->type_field =='dropdown' || $field->type_field =='yesno' || $field->type_field =='table')
-                                <a href="{{ route('profilehub.admin.users.profile.field', ['id' => $field->field_id, 'name' => $field->type_field]) }}" class="">
+                                <a href="{{ route('profilehub.admin.users.profile.field', ['id' => $field->field_id, 'group_id' => $field->group_id, 'name' => $field->type_field]) }}" class="">
                                   <i class="ri-cursor-fill"></i>
                                 </a>
                               @endif

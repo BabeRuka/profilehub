@@ -15,6 +15,7 @@ use BabeRuka\ProfileHub\Models\Users;
 use BabeRuka\ProfileHub\Models\UserField;
 use BabeRuka\ProfileHub\Models\UserProfiles;
 use BabeRuka\ProfileHub\Models\UserInputTypes; 
+use BabeRuka\ProfileHub\Models\UserFieldDetailsData;
 use BabeRuka\ProfileHub\Http\Controllers\AdminController;  
 use BabeRuka\ProfileHub\Http\Controllers\Auth\RegisterController;  
 use BabeRuka\ProfileHub\Repository\UserFunctions;
@@ -54,17 +55,20 @@ class AdminUsersController extends Controller
         $users = $Users->orderBy('id','desc')->get(); 
         $detail = new UsersController();
         $userdetails_headers = $detail->userDetailsTable(null, 1); 
+        $UserFunctions = new UserFunctions();
+        $user_details_header = $UserFunctions->default_userdetails_cols('profile-table');
         $all_users = array();
         $userdetails_cols = array();
 
         foreach ($userdetails_headers as $key => $value) {
             $userdetails_cols[$key]['col_name'] = $this->stripAll($value->translation);
+            $userdetails_cols[$key]['type_field'] = $value->type_field;
         }
         //$array = $users->toArray();
         $all_users = (object)$all_users;
         $page_title = 'Users';
         $page_title = $page_title ? $page_title : $this->page_title;
-        return view('vendor.profilehub.admin.users.users', compact('page_title', 'users', 'you', 'userdetails_headers', 'userdetails_cols', 'page_perm'));
+        return view('vendor.profilehub.admin.users.users', compact('page_title', 'users', 'you', 'userdetails_headers', 'userdetails_cols', 'page_perm', 'all_users', 'user_details_header'));
     }
     function walk($val, $key, $new_array)
     {
@@ -324,6 +328,8 @@ class AdminUsersController extends Controller
             $id = $row->id ?? null;
             $name = $row->name ?? ($row->username ?? '');
             $email = $row->email ?? '';
+            $table_cols = $this->tableColumns();
+            
 
             $viewHtml = '<a href="' . route('profilehub.admin.users.user', ['id' => $id]) . '" data-toggle="tooltip" data-placement="top" title="View">
                         <i class="ri-cursor-fill"></i>
@@ -345,7 +351,17 @@ class AdminUsersController extends Controller
             $rolesHtml = ''; // placeholder (original returned empty)
 
             $rowArray = (array) $row;
-
+            // tableColumns() returns parallel arrays: ['field_id' => [...], 'translation' => [...]]
+            if (isset($table_cols['field_id']) && is_array($table_cols['field_id'])) {
+                foreach ($table_cols['field_id'] as $index => $field_id) {
+                    $translation = $table_cols['translation'][$index] ?? null;
+                    $user_id = $id;
+                    $table_data = $field_id ? $this->userFieldDataArr($field_id, $user_id) : [];
+                    if ($field_id && $translation) {
+                        $rowArray[$translation] = $table_data;
+                    }
+                }
+            }
             // Append action columns depending on permissions
             $rowArray['view'] = ($page_perm['view'] ?? false) ? $viewHtml : '&nbsp;';
             $rowArray['perm'] = (($page_perm['approve'] ?? false) || ($page_perm['create'] ?? false) || ($page_perm['update'] ?? false)) ? $permHtml : '&nbsp;';
@@ -378,6 +394,8 @@ class AdminUsersController extends Controller
                 FROM user_field_details
                 INNER JOIN user_field_son ON user_field_son.son_id = user_field_details.user_entry
                 WHERE `user_field_details`.`field_id` = " . $field->field_id . " AND `user_field_details`.`user_id` = u.`id`  LIMIT 1  ) AS `" . $this->stripAll($field->translation) . "`, ";
+            }else if($field->type_field == 'table'){
+                $details .= "";
             } else {
                 $details .= " ( SELECT user_field_details.user_entry
                 FROM user_field_details
@@ -385,6 +403,7 @@ class AdminUsersController extends Controller
                 WHERE `user_field_details`.`field_id` = " . $field->field_id . " AND `user_field_details`.`user_id` = u.`id`  LIMIT 1) AS `" . $this->stripAll($field->translation) . "`, ";
             }
         }
+
         $query = "SELECT u.id, ud.user_id, ud.details_id, ud.username, ud.firstname,ud.lastname,ud.middle_name, ud.user_bio,ud.profile_pic,ud.user_avatar, u.`name`, 
         u.email,u.email_verified_at,u.updated_at AS lastlogin, u.updated_at AS last_seen,u.created_at,
         " . $details . "
@@ -466,5 +485,55 @@ class AdminUsersController extends Controller
             $user_group_id = $userGroupUsers->user_group_id;
         }
         return $user_group_id;
+    }
+    public function getUserFieldDetailsData($field_id, $user_id)
+    {
+        $rows = UserFieldDetailsData::query()
+            ->select('data_id','field_id','son_id','user_entry','sequence')
+            ->where('field_id', $field_id)
+            ->where('user_id', $user_id)
+            ->orderBy('sequence', 'asc')
+            ->get()
+            ->map(function($r){
+                return [
+                    'data_id'    => (int)$r->data_id,
+                    'field_id'   => (int)$r->field_id,
+                    'son_id'     => (int)$r->son_id,
+                    'user_entry' => $r->user_entry,
+                    'sequence'   => (int)$r->sequence,
+                ];
+            })
+            ->toArray();
+
+        return $rows;
+    }
+    function userFieldDataArr($field_id, $user_id){
+        $flat = $this->getUserFieldDetailsData($field_id, $user_id);
+
+        $grouped = [];
+        foreach ($flat as $row) {
+            $seq = $row['sequence'] ?? 0;
+            if (!isset($grouped[$seq])) $grouped[$seq] = [];
+            $grouped[$seq][] = $row;
+        }
+ 
+        $groupedOrdered = array_values($grouped);
+
+        return $groupedOrdered; 
+    }
+
+    function tableColumns()
+    {
+        $Userfield = new Userfield();
+        $fields = $Userfield->all();
+        $details = ['field_id' => [], 'translation' => []];
+        foreach ($fields as $field) {
+            if($field->type_field == 'table'){
+                $details['field_id'][] = $field->field_id;
+                $details['translation'][] = $this->stripAll($field->translation);
+            } 
+        }
+         
+        return $details;
     }
 }

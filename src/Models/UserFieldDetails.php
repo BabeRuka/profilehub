@@ -14,6 +14,31 @@ class UserFieldDetails extends Model
     const CREATED_AT = 'create_date';
     const UPDATED_AT = 'modified_date';
 
+    /**
+     * Mass assignable attributes
+     */
+    protected $fillable = [
+        'field_id',
+        'son_id',
+        'user_id',
+        'user_entry',
+        'details_data',
+        'create_date',
+        'modified_date',
+    ];
+
+    /**
+     * Attribute casting
+     */
+    protected $casts = [
+        'details_id' => 'integer',
+        'field_id' => 'integer',
+        'son_id' => 'integer',
+        'user_id' => 'integer',
+        'create_date' => 'datetime',
+        'modified_date' => 'datetime',
+    ];
+
     public function __construct()
     {
         $request = Request::instance();
@@ -138,7 +163,8 @@ class UserFieldDetails extends Model
     {
         $parent = $this->user_field($field_id);
         $field_query = ($field_id ? " AND field_id = '" . $field_id . "' " : '');
-        $results = DB::select(" SELECT * FROM `user_field_details` WHERE `user_id` = '" . $user_id . "' " . $field_query . " ");
+        $query = " SELECT * FROM `user_field_details` WHERE `user_id` = '" . $user_id . "' " . $field_query . " "; 
+        $results = DB::select($query);
         if (collect($results)->first()) {
             if ($parent[0]->type_field == 'dropdown') {
                 $son = $this->user_field_son($field_id, $results[0]->user_entry);
@@ -154,9 +180,23 @@ class UserFieldDetails extends Model
     public function one_userfield_details_data($field_id, $son_id, $sequence, $user_id)
     {
         $query = " SELECT * FROM `user_field_details_data` WHERE `user_id` = '" . $user_id . "' AND field_id = '" . $field_id . "' AND son_id = '" . $son_id . "' AND sequence = '" . $sequence . "' ";
-        $results = DB::select($query);
+        $results = DB::select($query); 
         if (collect($results)->first()) {
            return $results[0]->user_entry;
+        } else {
+            return null;
+        }
+    }
+
+    public function userfield_details_data($field_id, $son_id, $sequence, $user_id)
+    {
+        $results = DB::select(
+            'SELECT * FROM `user_field_details_data` WHERE `user_id` = ? AND `field_id` = ? AND `son_id` = ? AND `sequence` = ?',
+            [$user_id, $field_id, $son_id, $sequence]
+        );
+
+        if (collect($results)->first()) {
+           return $results;
         } else {
             return null;
         }

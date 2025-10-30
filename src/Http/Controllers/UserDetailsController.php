@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use BabeRuka\ProfileHub\Models\Userfield;
 use BabeRuka\ProfileHub\Models\UserFieldDetails; 
-use BabeRuka\ProfileHub\Models\UserfieldSon;
+use BabeRuka\ProfileHub\Models\UserFieldSon;
 use BabeRuka\ProfileHub\Models\UserfieldGroups;
 use BabeRuka\ProfileHub\Models\UserFieldSonData;
 use BabeRuka\ProfileHub\Models\UserFieldDetailsData;
@@ -276,7 +276,7 @@ class UserDetailsController extends Controller
             //son settinggs
             if ($request->input('function') == 'add-user-field-son-date-data') {
 
-                $UserfieldSon = new UserfieldSon();
+                $UserfieldSon = new UserFieldSon();
                 $son_data = $UserfieldSon->find($request->post('son_id'));
                 $date_plugin = $request->post('date_plugin');
                 $date_plugin_format = $request->post('date_plugin_format');
@@ -288,7 +288,7 @@ class UserDetailsController extends Controller
             }
             if ($request->input('function') == 'add-user-field-son-range-data') {
 
-                $UserfieldSon = new UserfieldSon();
+                $UserfieldSon = new UserFieldSon();
                 $son_data = $UserfieldSon->find($request->post('son_id'));
                 $start_range = $request->post('start_range');
                 $end_range = $request->post('end_range');
@@ -300,7 +300,7 @@ class UserDetailsController extends Controller
             }
             if ($request->input('function') == 'add-user-field-son-widget-data') {
 
-                $UserfieldSon = new UserfieldSon();
+                $UserfieldSon = new UserFieldSon();
                 $son_data = $UserfieldSon->find($request->post('son_id'));
                 $input_type = $request->post('input_type');
                 $dropdown_type = $request->post('dropdown_type');
@@ -312,11 +312,11 @@ class UserDetailsController extends Controller
                 return redirect()->back();
             }
             if ($request->input('function') == 'fix-son-sequence') {
-                $UserfieldSon = new UserfieldSon();
+                $UserfieldSon = new UserFieldSon();
                 $sons = $UserfieldSon->where(['field_id' => $request->input('field_id')])->get();
                 $count = 1;
                 foreach ($sons as $son) {
-                    $myson = new UserfieldSon();
+                    $myson = new UserFieldSon();
                     $son = $myson->find($son->son_id);
                     $son->sequence = $count;
                     $son->save();
@@ -488,7 +488,7 @@ class UserDetailsController extends Controller
      
     public function son_sequence($field_id)
     {
-        $UserfieldSon = new UserfieldSon();
+        $UserfieldSon = new UserFieldSon();
         $last_son = $UserfieldSon->where('field_id', $field_id)->orderBy('sequence', 'desc')->get();
         if ($last_son->first()) {
             $son = $last_son->first();

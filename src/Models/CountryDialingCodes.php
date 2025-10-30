@@ -11,4 +11,14 @@ class CountryDialingCodes extends Model
     protected $table = 'country_dialing_codes';
     protected $primaryKey = 'country_id';
     public $incrementing = true;
+    protected $fillable = [
+        'country_id',
+        'country_desc',
+        'country_code',
+        'dialing_code',
+    ];
+
+    protected $casts = [
+        'country_id' => 'integer',
+    ];
 }

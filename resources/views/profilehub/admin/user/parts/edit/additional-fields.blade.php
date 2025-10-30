@@ -3,6 +3,7 @@ $group_layout = $page_data->first() ? $page_data->where('page_key', 'group_layou
 $glayout = $group_layout != null && $group_layout->first() ? $group_layout->first()->page_data : '';
 $all_groups = $userdetails->user_field_groups();
 @endphp
+<div class="card-body">
 <div class="mt-3">
  <i class="fa fa-address-book" aria-hidden="true"></i> <strong>Additional Fields</strong>
  <hr />
@@ -88,6 +89,7 @@ $all_groups = $userdetails->user_field_groups();
                                             if ($glayout == 'cards') {
                                                 echo '<div class="' . $group_input . ' mb-3">';
                                             }
+                                            $input_enabled = 1; // For viewing all fields regardless of input enabled status
                                         @endphp
                                         @if ($input_enabled > 0)
                                             @php
@@ -111,6 +113,11 @@ $all_groups = $userdetails->user_field_groups();
                                                         </select>
                                                     </div>
                                                 </div>
+                                            @elseif ($field->type_field == 'table')
+                                                @php
+                                                    $son_fields = $userdetails->user_field_son($field->field_id);
+                                                @endphp
+                                                @include('profilehub::admin.user.parts.table-edit')
                                             @elseif ($field->type_field == 'date')
                                                 <label class="label label-default"
                                                     for="user_entry_{{ $field->field_id }}">{{ $field->translation }}</label>
@@ -173,4 +180,4 @@ $all_groups = $userdetails->user_field_groups();
              </div>
          </div>
      </div>
- 
+ </div>

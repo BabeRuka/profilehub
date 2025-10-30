@@ -298,7 +298,8 @@ class ProfileController extends Controller
         $user_id = $request->input('user_id');
         //update additional fields
         $user = Users::find($request->input('user_id'));
-        $user->user_bio = addslashes($request->input('user_bio'));
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
         $user->save();
         $detail = new AdminUserDetailsController();
 
@@ -320,12 +321,12 @@ class ProfileController extends Controller
 
         $msg = ($user_id > 0 ? 'you have successfully updated your profile' : 'error');
         $request->session()->flash('message', $msg);
-        return redirect()->route('profilehub::dashboard.index');
+        return redirect()->route('profilehub.admin.users');
     }
      
     function updateProfileDetails($user_id)
     {
-        $query = " SELECT SUM((t.username != '') + (t.name != '') + (t.firstname != '') + (t.lastname != '') + (t.email != '')) AS num_core FROM users t WHERE t.id = '" . $user_id . "' ";
+        $query = " SELECT SUM((t.name != '') + (t.email != '')) AS num_core FROM users t WHERE t.id = '" . $user_id . "' ";
         $res1 = DB::select($query);
         $query = " SELECT SUM(user_entry != '') AS num_fields FROM user_field_details WHERE user_id = '" . $user_id . "' ";
         $res2 = DB::select($query);

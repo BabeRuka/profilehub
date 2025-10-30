@@ -34,6 +34,15 @@
         .card-title{
             font-size : medium !important; 
         }
+        .dt-length {
+            width: 100% !important;
+            float: left;
+            margin-left: 1% !important;
+        }
+
+        .dt-length label {
+            display: none  !important;
+        }
 
     </style>
     @yield('css')

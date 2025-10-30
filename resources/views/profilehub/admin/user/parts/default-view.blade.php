@@ -112,7 +112,7 @@
                                                                         @include('profilehub::admin.user.parts.table')
                                                                     @else
                                                                         <strong>{{ $field->translation }}:</strong>
-                                                                        {{ $user_entry = $userdetails->one_user_field_details($field->field_id, $user->user_id) }}
+                                                                        {{ $user_entry = $userdetails->one_user_field_details($field->field_id, $user->id) }}
                                                                         <?php $num_filled += $user_entry ? 1 : 0; ?>
                                                                     @endif
                                                                 </div>

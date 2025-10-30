@@ -1,7 +1,21 @@
 @extends('vendor.profilehub.layouts.admin')
 @inject('userdetails', 'BabeRuka\ProfileHub\Models\UserFieldDetails')
 @section('css')
-<link rel="stylesheet" href="{{ asset('vendor/profilehub/addons/datatables/bootstrap5/css/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/profilehub/addons/datatables/bootstrap5/css/datatables.min.css') }}">
+    <!-- Small CSS tweaks for table-type (work-history) columns -->
+    <style>
+        td.work-history-col {
+            white-space: normal !important;
+            vertical-align: top;
+            min-width: 320px; /* keep column readable but flexible */
+            max-width: none;
+            overflow: visible;
+        }
+        td.work-history-col .row { display: flex; flex-wrap: wrap; margin-bottom: 0.25rem; }
+        td.work-history-col .col { padding: .25rem .5rem; min-width: 80px; }
+    /* allow DataTables to compute column widths naturally */
+    table.dataTable { table-layout: auto; }
+    </style>
 @endsection
 @section('content')
     <div class="container-fluid">
@@ -20,8 +34,7 @@
                                     <i class="ri-add-circle-fill ms-1"></i> <span class="ms-1">Add User</span>
                                 </a>
                             </div>
-                        </div>
-                        <hr>
+                        </div> 
                         <div class="card-body">
                             <div class="body">
                                 <div class="table-responsive">
@@ -32,8 +45,15 @@
                                                 <th>ID</th>
                                                 <th>Name</th>
                                                 <th>E-mail</th>
+                                                @foreach ($user_details_header as $header)
+                                                    <th>{{ ucwords(str_replace('_', ' ', $header)) }}</th>
+                                                @endforeach
                                                 @foreach ($userdetails_headers as $header)
-                                                    <th>{{ $header->translation }}</th>
+                                                    @if($header->type_field == 'table')
+                                                        <th style="min-width: 150px;">{{ $header->translation }}</th>
+                                                    @else
+                                                        <th>{{ $header->translation }}</th>
+                                                    @endif
                                                 @endforeach
                                                 <th>Register Date</th>
                                                 <th>Last Login</th>
@@ -61,6 +81,9 @@
 
 
     @section('javascript')
+        <!-- DataTables CSS (ensure styling is loaded) -->
+        
+
         <script src="{{ asset('vendor/profilehub/addons/datatables/bootstrap5/js/datatables.min.js') }}"></script>
         <script>
             $(function() {
@@ -106,8 +129,73 @@
                             data: 'email',
                             name: 'email'
                         },
-                        <?php foreach($userdetails_cols as $header){ ?>  
+                        <?php foreach($user_details_header as $header){ ?>  
 
+                        {
+                            data: '<?php echo $header; ?>',
+                            name: '<?php echo $header; ?>',
+                            defaultContent: '<i style="display:none">' + "" + "</i>",
+                            render: function (data, type, row, meta) {
+                                if (data === 0) {
+                                    return '<i></i>';
+                                } else if (data === "") {
+                                    return (
+                                        '<i></i>'
+                                    );
+                                }
+                            return data;
+                            },
+                        },
+                        <?php } ?>
+                        <?php foreach($userdetails_cols as $header){ ?>  
+                        <?php if($header['type_field'] == 'table'){ ?>
+                            {
+                                name: "<?php echo $header['col_name']; ?>",
+                                data: "<?php echo $header['col_name']; ?>",
+                                className: 'work-history-col',
+                                defaultContent: '<i style="display:none">' + "" + "</i>",
+                                render: function (data, type, row, meta) {
+                                    // empty / zero checks
+                                    if (data === 0 || data === "" || data == null) {
+                                        return '<i></i>';
+                                    }
+
+                                    // If server returned grouped arrays (array of rows grouped by sequence), format them as Bootstrap rows/cols
+                                    if (Array.isArray(data)) {
+                                        try {
+                                            // helper to escape HTML
+                                            function esc(s){
+                                                if (s === null || s === undefined) return '';
+                                                return String(s)
+                                                    .replace(/&/g, '&amp;')
+                                                    .replace(/</g, '&lt;')
+                                                    .replace(/>/g, '&gt;')
+                                                    .replace(/\"/g, '&quot;')
+                                                    .replace(/'/g, '&#39;');
+                                            }
+
+                                            var html = '';
+                                            data.forEach(function(group){
+                                                if (!Array.isArray(group)) return;
+                                                html += '<div class="row mb-1">';
+                                                group.forEach(function(item){
+                                                    var val = item && item.user_entry !== undefined ? item.user_entry : '';
+                                                    html += '<div class="col">' + esc(val) + '</div>';
+                                                });
+                                                html += '</div>';
+                                            });
+                                            return html;
+                                        } catch (e) {
+                                            return JSON.stringify(data);
+                                        }
+                                    }
+
+                                    // default: return raw value
+                                    return data;
+                                },
+                            },
+
+                        <?php }else{ ?>
                         {
                             name: "<?php echo $header['col_name']; ?>",
                             data: "<?php echo $header['col_name']; ?>",
@@ -123,7 +211,7 @@
                             return data;
                             },
                         },
-
+                        <?php } ?>
                         <?php } ?> 
                         
                         {
@@ -196,9 +284,6 @@
                 });
             });
 
-            //$('#course_date_begin,#course_date_end').datepicker({
-            //     uiLibrary: 'bootstrap4'
-            // });
             function changePerm(id, title) {
                 document.getElementById('perm_user').value = id;
                 document.getElementById('permModalTitle').innerHTML = "Change " + title + "'s Password";
@@ -246,18 +331,12 @@
 
                 const decodedUserBio = decodeURIComponent(user_bio);
                 const decodedUserName = decodeURIComponent(name);
-                document.getElementById('addUserDetailsTitle').innerHTML = 'Edit User Details - ' + decodedUserName;
-
+                document.getElementById('addUserDetailsTitle').innerHTML = 'Edit User Details - ' + decodedUserName; 
                 const new_details_id = parseInt(details_id);
                 console.log(new_details_id);
                 if (isZeroOrLess(new_details_id)) {
-                    document.getElementById('details_id').value = '';
-                    document.getElementById('user_id_details_id').value = '';
-                    document.getElementById('username').value = '';
-                    document.getElementById('firstname').value = '';
-                    document.getElementById('lastname').value = '';
-                    document.getElementById('middle_name').value = '';
-                    document.getElementById('user_bio').value = '';
+                    document.getElementById('details_id').value = '0';
+                    document.getElementById('user_id_details_id').value = user_id;
                     return true;
                 }else{
                     document.getElementById('details_id').value = details_id;
@@ -266,9 +345,7 @@
                     document.getElementById('firstname').value = firstname;
                     document.getElementById('lastname').value = lastname;
                     document.getElementById('middle_name').value = middle_name;
-                    document.getElementById('user_bio').value = decodedUserBio;
-                    //document.getElementById('profile_pic').value = profile_pic;
-                    //document.getElementById('user_avatar').value = user_avatar;
+                    document.getElementById('user_bio').value = decodedUserBio; 
                 }
             }
             function isZeroOrLess(number) {

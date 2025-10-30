@@ -15,6 +15,26 @@ class UserDetails extends Model
     const CREATED_AT = 'create_date';
     const UPDATED_AT = 'modified_date';
 
+    protected $fillable = [
+        'user_id',
+        'username',
+        'firstname',
+        'lastname',
+        'middle_name',
+        'user_bio',
+        'profile_pic',
+        'user_avatar',
+        'create_date',
+        'modified_date',
+    ];
+
+    protected $casts = [
+        'details_id' => 'integer',
+        'user_id' => 'integer',
+        'create_date' => 'datetime',
+        'modified_date' => 'datetime',
+    ];
+
     public function __construct()
     {
         $request = Request::instance();

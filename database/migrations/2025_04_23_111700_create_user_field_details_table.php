@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('user_field_details', function (Blueprint $table) {
             $table->integer('details_id', true);
-            $table->integer('field_id')->index('field_id');
+            $table->unsignedInteger('field_id')->index('field_id');
             $table->integer('son_id')->nullable();
-            $table->integer('user_id')->default(0)->index('user_id');
+            $table->unsignedBigInteger('user_id')->default(0)->index('user_id');
             $table->text('user_entry')->nullable()->fulltext('user_entry');
             $table->text('details_data')->nullable();
             $table->dateTime('create_date');

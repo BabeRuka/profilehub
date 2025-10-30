@@ -5,7 +5,9 @@
 
 @section('content')
 <div class="card">
-    <h5 class="card-header">{{ __('Dashboards') }}</h5>
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="card-title text-uppercase fw-bold"><i class="fa fa-solid fa-align-justify"></i> {{ __('Dashboards') }}</h5>
+    </div>
     <div class="col-md-12 col-lg-12">
         <div class="card-body">
             <div class="row g-4">

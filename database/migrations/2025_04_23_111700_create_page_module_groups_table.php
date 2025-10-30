@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('page_module_groups', function (Blueprint $table) {
-            $table->integer('group_id', true);
-            $table->integer('setting_id')->nullable();
+            $table->unsignedInteger('group_id', true);
+            $table->primary('group_id');
+            $table->unsignedInteger('setting_id')->nullable();
             $table->string('group_name');
-            $table->string('goup_slug');
+            $table->string('group_slug');
             $table->string('group_icon')->nullable();
             $table->string('group_desc')->nullable();
             $table->string('group_active')->nullable();

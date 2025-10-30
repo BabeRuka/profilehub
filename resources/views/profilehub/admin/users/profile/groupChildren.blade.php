@@ -26,7 +26,6 @@
                       </button>
 
                     </div>
-                    <hr />
                     <div class="card-body">
                         <form class="needs-validation" action="{{ route('profilehub.admin.users.profile.userdetails.manage') }}" method="POST" novalidate>
                             @csrf

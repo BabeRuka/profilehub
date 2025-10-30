@@ -11,9 +11,7 @@ Profile Photo
 <div class="row">
     <div class="col-12 mb-2">
         <div class="form-group">
-            <input type="file" name="profile_pic" id="profile_pic" data-show-loader="false"
-                data-allowed-file-extensions="jpg png jpeg" class="dropify" data-default-file="{{ $profile_pic }}"
-                {{ $profile_pic == '' ? 'required' : '' }} />
+            <input type="file" name="profile_pic" id="profile_pic" data-show-loader="false" data-allowed-file-extensions="jpg png jpeg" class="dropify" data-default-file="{{ $profile_pic }}" />
             <div class="invalid-feedback">
                 Profile Picture is required.
             </div>

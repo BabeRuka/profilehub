@@ -70,10 +70,10 @@ class AdminAjaxController extends Controller
         <tbody>';
                 if(count($all_users) > 0){
                     foreach($all_users as $user){
-                        $checked = ($user->user_id == $user->grouped_id ? 'checked' : '');
-                        $del = ($user->user_id == $user->grouped_id ? ' <button type="button"
+                        $checked = ($user->id == $user->grouped_id ? 'checked' : '');
+                        $del = ($user->id == $user->grouped_id ? ' <button type="button"
                         class="btn btn-danger deleteFunc" data-bb-example-key="confirm-options"
-                        data-key="dcgf" data-pidv="'.$user->group_id.'" data-fidv="'.$user->user_id.'" data-func="dynamic"
+                        data-key="dcgf" data-pidv="'.$user->group_id.'" data-fidv="'.$user->id.'" data-func="dynamic"
                         data-formid="DeleteCourseGroupForm">
                         <i class="c-icon c-icon-2xs cil-x-circle active"></i></button>' : '');
                         $div .= '
@@ -81,7 +81,7 @@ class AdminAjaxController extends Controller
                                 <td>
                                     <div class="form-group form-check">
                                         <label class="form-check-label">
-                                        <input class="form-check-input checkboxRequired" type="checkbox" name="user_id[]" value="'.$user->user_id.'" '.$checked.' required>
+                                        <input class="form-check-input checkboxRequired" type="checkbox" name="user_id[]" value="'.$user->id.'" '.$checked.' required>
                                         <div class="form-group-messages"></div>
                                         </label>
                                     </div>

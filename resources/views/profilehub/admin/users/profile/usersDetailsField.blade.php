@@ -23,27 +23,33 @@ $functions = new UserFunctions();
                 <div class="col">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="card-title text-uppercase fw-bold">
-                            <i class="fa fa-solid fa-align-justify"></i> Additional Profile Fields  [{{ strtoupper(request('name')) }}]
-                        </h5>
-                        <div>
-                             <!-- Button trigger modal -->
-                            @if ($page_perm['update'])
-                                <button type="submit" class="btn btn-success active ml-3"
-                                    onClick="document.getElementById('fixSeqeunce').submit()">
-                                    <i class="ri-arrow-up-down-line"></i> 
-                                    <span class="ms-1"> Fix Sequence </span>
-                                </button>
-                            @endif
+                            <h5 class="card-title text-uppercase fw-bold">
+                                <i class="fa fa-solid fa-align-justify"></i> {{ $group_id > 0 && isset($group) ? '' . $group->group_name.' Group' : '' }}
+                            </h5>
+                            <div>
+                                <!-- Button trigger modal -->
+                                @if ($page_perm['update'])
+                                    <button type="submit" class="btn btn-success active ml-3"
+                                        onClick="document.getElementById('fixSeqeunce').submit()">
+                                        <i class="ri-arrow-up-down-line"></i> 
+                                        <span class="ms-1"> Fix Sequence </span>
+                                    </button>
+                                @endif
 
-                            @if ($page_perm['create'])
-                                <button type="button" onclick="addField()" class="btn btn-primary active"
-                                    data-bs-toggle="modal" data-bs-target="#addUserFieldSon">
-                                    <i class="ri-add-circle-fill ms-1"></i>
-                                    <span class="ms-1"> Add Field</span>
-                                </button>
-                            @endif
+                                @if ($page_perm['create'])
+                                    <button type="button" onclick="addField()" class="btn btn-primary active"
+                                        data-bs-toggle="modal" data-bs-target="#addUserFieldSon">
+                                        <i class="ri-add-circle-fill ms-1"></i>
+                                        <span class="ms-1"> Add Field</span>
+                                    </button>
+                                @endif
                             </div>
+                        </div>
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title text-uppercase fw-bold">
+                                Additional Profile Fields  [{{ strtoupper(request('name')) }}]
+                            </h5>
+                            
                         </div>
                         <div class="card-body">
                             <div class="overflow-auto">
@@ -239,12 +245,10 @@ $functions = new UserFunctions();
 
 @endsection
 @section('javascript')
-     
-    <script src="{{ asset('addons/jquery-dynamicrows/js/dynamicrows.js') }}"></script>
-    <script src="{{ asset('addons/bootstrap-select/bootstrap-select.min.js') }}"></script>
-
-
+     <script src="{{ asset('vendor/profilehub/addons/datatables/bootstrap5/js/datatables.min.js') }}"></script>
+    
     <script>
+       
         // Example starter JavaScript for disabling form submissions if there are invalid fields jquery-dropdown
         (function() {
             'use strict';

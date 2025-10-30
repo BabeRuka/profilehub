@@ -2,7 +2,11 @@
 <hr />
 <div class="row mb-6">
     <div class="col-12">
-        @foreach ($userdetails->user_field_groups() as $group)
+        <?php 
+        $num_rows = 0; $num_filled = 0;
+        $all_field_groups = $userdetails->user_field_groups();
+        ?>
+        @foreach ($all_field_groups as $group)
             @php
                 $gs = $page_data->where('page_module', $group->group_id);
                 $group_enabled = $gs->first() ? $gs->where('page_key', 'group_enabled') : null;
@@ -26,8 +30,11 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-
-                        @foreach ($userdetails->user_field(0, $group->group_id) as $field)
+                        <?php 
+                        
+                        $all_fields_in_group = $userdetails->user_field(null, $group->group_id);
+                        ?>
+                        @foreach ($all_fields_in_group as $field)
                             @php
                                 $page_settings = $page_data->where('page_module', $field->field_id);
                                 $input_enabled = $page_settings->first() ? $page_settings->where('page_key', 'page_input') : null;
@@ -43,6 +50,7 @@
                                 $input_settings = $page_settings->first() ? $page_settings->where('page_key', 'page_input_settings') : null;
                                 $input_settings = $input_settings->first() && $input_settings->first()->page_data ? json_decode($input_settings->first()->page_data) : null;
                                 $input_type = $input_settings != null ? $input_settings->input : 'text';
+                                $input_enabled = 1; // For viewing all fields regardless of input enabled status
                             @endphp
                             @if ($input_enabled > 0)
                                 <div class="{{ $field->type_field == 'table' ? 'col-12' : $groupcard_class }} mb-3">
@@ -59,7 +67,7 @@
                                             <div class="form-line">
                                                 <div class="form-control">
                                                     @php  
-                                                    $user_entry = $userdetails->one_user_field_details($field->field_id, $user->user_id); 
+                                                    $user_entry = $userdetails->one_user_field_details($field->field_id, $user->id); 
                                                     if($user_entry){
                                                         echo $user_entry;
                                                     }else{
