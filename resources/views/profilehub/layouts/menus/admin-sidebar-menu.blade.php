@@ -98,7 +98,7 @@
         </div>
     </li>
 </ul>
-<form id="logout-form" action="{{ route('user.logout') }}" id="logout-form" method="POST" class="d-none">    
+<form id="logout-form" action="{{ route('profilehub.admin.profile.logoutruser') }}" id="logout-form" method="POST" class="d-none">    
     @method('POST')
     @csrf 
     
