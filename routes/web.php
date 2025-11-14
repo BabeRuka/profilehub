@@ -30,6 +30,7 @@ Route::prefix('profilehub')->group(function () {
             Route::post('/createrecord', [ProfileController::class, 'createrecord'])->name('profilehub.admin.profile.createrecord');
             Route::get('/force', action: [ProfileController::class, 'force'])->name('profilehub.admin.profile.force');
             Route::post('/destroy', action: [ProfileController::class, 'destroy'])->name('profilehub.admin.profile.destroy');
+            Route::post('/logoutruser', [ProfileController::class, 'logoutrUser'])->name('profilehub.admin.profile.logoutruser');
         });
 
         // Users routes
