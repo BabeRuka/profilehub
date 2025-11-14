@@ -26,7 +26,7 @@
     @yield('meta')
     @include('profilehub::layouts.includes.fontawesome')
     @include('profilehub::layouts.includes.remixicon')
-    <link href="{{ asset('vendor/profilehub/addons/bootstrap/5.2.3/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/profilehub/addons/bootstrap/5.3.3/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/profilehub/fonts/fontawesome/4.7.0/css/font-awesome.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('vendor/profilehub/fonts/remixicon/remixicon.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/profilehub/css/profilehub.css') }}" rel="stylesheet"> 
@@ -74,7 +74,7 @@
 
     <!-- Core JS -->
     <script src="{{ asset('vendor/profilehub/addons/jquery/jquery-3.6.0.min.js') }}"></script>
-    <script src="{{ asset('vendor/profilehub/addons/bootstrap/5.2.3/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('vendor/profilehub/addons/bootstrap/5.3.3/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('vendor/profilehub/js/profilehub.js') }}"></script>
     <script>
 
