@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('user_field_groups', function (Blueprint $table) {
-            $table->integer('group_id', true);
+            $table->unsignedInteger('group_id', true);
             $table->string('type_group')->nullable()->index('type_group');
             $table->string('group_icon')->nullable()->index('group_icon');
             $table->string('group_name')->default('')->index('group_name');
