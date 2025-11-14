@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('user_group_users', function (Blueprint $table) {
-            $table->integer('user_group_id', true);
-            $table->integer('group_id')->nullable();
-            $table->integer('user_id')->nullable();
+            $table->unsignedInteger('user_group_id', true);
+            $table->unsignedInteger('group_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->dateTime('create_date')->nullable();
             $table->timestamp('modified_date')->useCurrentOnUpdate()->nullable();
         });
