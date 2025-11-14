@@ -29,6 +29,7 @@ Add the ProfileHubServiceProvider calls to the providers section.
 php artisan vendor:publish --tag=profilehub-config
 php artisan vendor:publish --tag=profilehub-views
 php artisan vendor:publish --tag=profilehub-assets
+php artisan vendor:publish --tag=profilehub-seeders
 
 ```
 ## Run the Migrations
@@ -38,6 +39,13 @@ php artisan migrate --path=vendor/baberuka/profilehub/database/migrations/2025_0
 php artisan profilehub:migrate
 php artisan migrate
 ```
+
+## Run the seeders
+
+```bash
+php artisan db:seed --class="Database\\Seeders\\DatabaseSeeder" --force
+```
+
 ## Usage
 
 Visit `/profilehub/index` to check if it's working.
