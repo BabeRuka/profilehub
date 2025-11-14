@@ -34,6 +34,7 @@ php artisan vendor:publish --tag=profilehub-assets
 ## Run the Migrations
 
 ```bash
+php artisan migrate --path=vendor/baberuka/profilehub/database/migrations/2025_04_23_111700_create_pages_table.php --force
 php artisan profilehub:migrate
 php artisan migrate
 ```
