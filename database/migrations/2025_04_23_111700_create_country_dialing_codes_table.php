@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('country_dialing_codes', function (Blueprint $table) {
-            $table->integer('country_id');
-            $table->text('country_desc')->nullable();
-            $table->string('country_code')->nullable();
-            $table->string('dialing_code')->nullable();
-        });
+        if (! Schema::hasTable('country_dialing_codes')) {
+            Schema::create('country_dialing_codes', function (Blueprint $table) {
+                $table->integer('country_id');
+                $table->text('country_desc')->nullable();
+                $table->string('country_code')->nullable();
+                $table->string('dialing_code')->nullable();
+            });
+        }
     }
 
     /**

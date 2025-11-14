@@ -11,18 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_field_details_data', function (Blueprint $table) {
-            $table->integer('data_id', true);
-            $table->unsignedInteger('field_id')->index('field_id');
-            $table->unsignedInteger('son_id')->index('son_id');
-            $table->unsignedBigInteger('user_id')->index('user_id');
-            $table->text('user_entry')->nullable()->fulltext('user_entry');
-            $table->integer('user_rows')->nullable();
-            $table->text('details_data')->nullable();
-            $table->integer('sequence')->nullable()->index('sequence');
-            $table->dateTime('create_date');
-            $table->timestamp('modified_date')->useCurrentOnUpdate()->useCurrent();
-        });
+        if (! Schema::hasTable('user_field_details_data')) {
+            Schema::create('user_field_details_data', function (Blueprint $table) {
+                $table->integer('data_id', true);
+                $table->unsignedInteger('field_id')->index('field_id');
+                $table->unsignedInteger('son_id')->index('son_id');
+                $table->unsignedBigInteger('user_id')->index('user_id');
+                $table->text('user_entry')->nullable()->fulltext('user_entry');
+                $table->integer('user_rows')->nullable();
+                $table->text('details_data')->nullable();
+                $table->integer('sequence')->nullable()->index('sequence');
+                $table->dateTime('create_date');
+                $table->timestamp('modified_date')->useCurrentOnUpdate()->useCurrent();
+            });
+        }
     }
 
     /**

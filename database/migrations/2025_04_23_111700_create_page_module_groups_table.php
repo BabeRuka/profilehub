@@ -11,18 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('page_module_groups', function (Blueprint $table) {
-            $table->unsignedInteger('group_id', true);
-            $table->primary('group_id');
-            $table->unsignedInteger('setting_id')->nullable();
-            $table->string('group_name');
-            $table->string('group_slug');
-            $table->string('group_icon')->nullable();
-            $table->string('group_desc')->nullable();
-            $table->string('group_active')->nullable();
-            $table->timestamp('modified_date')->useCurrentOnUpdate()->nullable()->useCurrent();
-            $table->dateTime('create_date')->nullable();
-        });
+        if (! Schema::hasTable('page_module_groups')) {
+            Schema::create('page_module_groups', function (Blueprint $table) {
+                $table->unsignedInteger('group_id', true);
+                $table->primary('group_id');
+                $table->unsignedInteger('setting_id')->nullable();
+                $table->string('group_name');
+                $table->string('group_slug');
+                $table->string('group_icon')->nullable();
+                $table->string('group_desc')->nullable();
+                $table->string('group_active')->nullable();
+                $table->timestamp('modified_date')->useCurrentOnUpdate()->nullable()->useCurrent();
+                $table->dateTime('create_date')->nullable();
+            });
+        }
     }
 
     /**

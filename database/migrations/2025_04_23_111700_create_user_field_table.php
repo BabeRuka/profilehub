@@ -11,20 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_field', function (Blueprint $table) {
-            $table->unsignedInteger('field_id', true);
-            $table->integer('id_details')->nullable()->default(0)->index('id_common');
-            $table->unsignedInteger('group_id')->nullable()->index('group_id');
-            $table->string('type_field')->nullable()->index('type_field');
-            $table->string('lang_code')->nullable()->default('eng');
-            $table->string('translation')->default('')->index('translation');
-            $table->integer('sequence')->nullable()->default(0);
-            $table->integer('group_sequence')->nullable();
-            $table->string('show_on_platform')->nullable()->default('framework,');
-            $table->boolean('use_multilang')->nullable()->default(false);
-            $table->dateTime('create_date')->nullable();
-            $table->timestamp('modified_date')->useCurrentOnUpdate()->nullable()->useCurrent();
-        });
+        if (! Schema::hasTable('user_field')) {
+            Schema::create('user_field', function (Blueprint $table) {
+                $table->unsignedInteger('field_id', true);
+                $table->integer('id_details')->nullable()->default(0)->index('id_common');
+                $table->unsignedInteger('group_id')->nullable()->index('group_id');
+                $table->string('type_field')->nullable()->index('type_field');
+                $table->string('lang_code')->nullable()->default('eng');
+                $table->string('translation')->default('')->index('translation');
+                $table->integer('sequence')->nullable()->default(0);
+                $table->integer('group_sequence')->nullable();
+                $table->string('show_on_platform')->nullable()->default('framework,');
+                $table->boolean('use_multilang')->nullable()->default(false);
+                $table->dateTime('create_date')->nullable();
+                $table->timestamp('modified_date')->useCurrentOnUpdate()->nullable()->useCurrent();
+            });
+        }
     }
 
     /**

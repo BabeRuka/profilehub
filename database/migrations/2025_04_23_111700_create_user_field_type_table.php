@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_field_type', function (Blueprint $table) {
-            $table->integer('type_id', true);
-            $table->string('type_field')->default('');
-            $table->string('type_file')->default('');
-            $table->string('type_class')->default('');
-            $table->string('type_category')->default('standard');
-            $table->dateTime('create_date')->nullable();
-            $table->timestamp('modified_date')->useCurrentOnUpdate()->nullable()->useCurrent();
-        });
+        if (! Schema::hasTable('user_field_type')) {
+            Schema::create('user_field_type', function (Blueprint $table) {
+                $table->integer('type_id', true);
+                $table->string('type_field')->default('');
+                $table->string('type_file')->default('');
+                $table->string('type_class')->default('');
+                $table->string('type_category')->default('standard');
+                $table->dateTime('create_date')->nullable();
+                $table->timestamp('modified_date')->useCurrentOnUpdate()->nullable()->useCurrent();
+            });
+        }
     }
 
     /**

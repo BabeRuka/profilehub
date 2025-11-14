@@ -11,18 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_field_son', function (Blueprint $table) {
-            $table->unsignedInteger('son_id', true);
-            $table->unsignedInteger('field_id')->default(0)->index('field_id');
-            $table->string('lang_code', 50)->nullable()->default('');
-            $table->string('translation')->default('');
-            $table->enum('field_type', ['text', 'data', 'json', 'number', 'string', 'dropdown', 'date', 'widget'])->default('text');
-            $table->string('field_settings')->nullable();
-            $table->integer('sequence')->nullable()->default(0);
-            $table->text('data')->nullable();
-            $table->dateTime('create_date')->nullable();
-            $table->timestamp('modified_date')->useCurrentOnUpdate()->nullable()->useCurrent();
-        });
+        if (! Schema::hasTable('user_field_son')) {
+            Schema::create('user_field_son', function (Blueprint $table) {
+                $table->unsignedInteger('son_id', true);
+                $table->unsignedInteger('field_id')->default(0)->index('field_id');
+                $table->string('lang_code', 50)->nullable()->default('');
+                $table->string('translation')->default('');
+                $table->enum('field_type', ['text', 'data', 'json', 'number', 'string', 'dropdown', 'date', 'widget'])->default('text');
+                $table->string('field_settings')->nullable();
+                $table->integer('sequence')->nullable()->default(0);
+                $table->text('data')->nullable();
+                $table->dateTime('create_date')->nullable();
+                $table->timestamp('modified_date')->useCurrentOnUpdate()->nullable()->useCurrent();
+            });
+        }
     }
 
     /**

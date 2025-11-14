@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_groups', function (Blueprint $table) {
-            $table->unsignedInteger('group_id', true);
-            $table->string('group_name')->nullable();
-            $table->string('group_description')->nullable();
-            $table->string('group_key')->nullable();
-            $table->enum('group_type', ['user', 'cluster'])->nullable()->default('user');
-            $table->string('group_admin')->nullable();
-            $table->dateTime('create_date')->nullable();
-            $table->timestamp('modified_date')->useCurrentOnUpdate()->nullable()->useCurrent();
-        });
+        if (! Schema::hasTable('user_groups')) {
+            Schema::create('user_groups', function (Blueprint $table) {
+                $table->unsignedInteger('group_id', true);
+                $table->string('group_name')->nullable();
+                $table->string('group_description')->nullable();
+                $table->string('group_key')->nullable();
+                $table->enum('group_type', ['user', 'cluster'])->nullable()->default('user');
+                $table->string('group_admin')->nullable();
+                $table->dateTime('create_date')->nullable();
+                $table->timestamp('modified_date')->useCurrentOnUpdate()->nullable()->useCurrent();
+            });
+        }
     }
 
     /**

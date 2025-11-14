@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_input_types', function (Blueprint $table) {
-            $table->integer('input_id', true);
-            $table->string('input_name');
-            $table->string('input_value');
-            $table->enum('input_type', ['html', 'custom'])->default('html');
-            $table->dateTime('create_date')->nullable();
-            $table->timestamp('modified_date')->useCurrentOnUpdate()->nullable()->useCurrent();
-        });
+        if (! Schema::hasTable('user_input_types')) {
+            Schema::create('user_input_types', function (Blueprint $table) {
+                $table->integer('input_id', true);
+                $table->string('input_name');
+                $table->string('input_value');
+                $table->enum('input_type', ['html', 'custom'])->default('html');
+                $table->dateTime('create_date')->nullable();
+                $table->timestamp('modified_date')->useCurrentOnUpdate()->nullable()->useCurrent();
+            });
+        }
     }
 
     /**

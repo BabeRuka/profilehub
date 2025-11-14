@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_field_groups', function (Blueprint $table) {
-            $table->unsignedInteger('group_id', true);
-            $table->string('type_group')->nullable()->index('type_group');
-            $table->string('group_icon')->nullable()->index('group_icon');
-            $table->string('group_name')->default('')->index('group_name');
-            $table->integer('sequence')->nullable()->default(0);
-            $table->dateTime('create_date')->nullable();
-            $table->timestamp('modified_date')->useCurrentOnUpdate()->nullable()->useCurrent();
-        });
+        if (! Schema::hasTable('user_field_groups')) {
+            Schema::create('user_field_groups', function (Blueprint $table) {
+                $table->unsignedInteger('group_id', true);
+                $table->string('type_group')->nullable()->index('type_group');
+                $table->string('group_icon')->nullable()->index('group_icon');
+                $table->string('group_name')->default('')->index('group_name');
+                $table->integer('sequence')->nullable()->default(0);
+                $table->dateTime('create_date')->nullable();
+                $table->timestamp('modified_date')->useCurrentOnUpdate()->nullable()->useCurrent();
+            });
+        }
     }
 
     /**

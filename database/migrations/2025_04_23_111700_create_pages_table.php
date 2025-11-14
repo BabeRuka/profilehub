@@ -11,22 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pages', function (Blueprint $table) {
-            $table->unsignedInteger('page_id', true);
-            $table->primary('page_id');
-            $table->string('page_slug')->nullable();
-            $table->string('page_name');
-            $table->string('page_title')->nullable();
-            $table->string('page_tags')->nullable();
-            $table->integer('page_type')->nullable();
-            $table->integer('page_admin')->nullable();
-            $table->string('page_desc')->nullable();
-            $table->text('page_content')->nullable();
-            $table->string('linked_page')->nullable();
-            $table->string('page_settings')->nullable();
-            $table->dateTime('create_date')->nullable();
-            $table->timestamp('modified_date')->useCurrentOnUpdate()->nullable()->useCurrent();
-        });
+        if (! Schema::hasTable('pages')) {
+            Schema::create('pages', function (Blueprint $table) {
+                $table->unsignedInteger('page_id', true);
+                $table->primary('page_id');
+                $table->string('page_slug')->nullable();
+                $table->string('page_name');
+                $table->string('page_title')->nullable();
+                $table->string('page_tags')->nullable();
+                $table->integer('page_type')->nullable();
+                $table->integer('page_admin')->nullable();
+                $table->string('page_desc')->nullable();
+                $table->text('page_content')->nullable();
+                $table->string('linked_page')->nullable();
+                $table->string('page_settings')->nullable();
+                $table->dateTime('create_date')->nullable();
+                $table->timestamp('modified_date')->useCurrentOnUpdate()->nullable()->useCurrent();
+            });
+        }
     }
 
     /**

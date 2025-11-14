@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_profiles', function (Blueprint $table) {
-            $table->integer('profile_id', true);
-            $table->unsignedBigInteger('user_id')->nullable()->index('user_id');
-            $table->enum('pforce', ['1', '0'])->default('0')->index('pforce');
-            $table->string('num_rows')->nullable()->index('num_rows');
-            $table->string('num_filled')->nullable()->index('num_filled');
-            $table->dateTime('create_date')->nullable();
-            $table->dateTime('modified_date')->useCurrentOnUpdate()->nullable();
-        });
+        if (! Schema::hasTable('user_profiles')) {
+            Schema::create('user_profiles', function (Blueprint $table) {
+                $table->integer('profile_id', true);
+                $table->unsignedBigInteger('user_id')->nullable()->index('user_id');
+                $table->enum('pforce', ['1', '0'])->default('0')->index('pforce');
+                $table->string('num_rows')->nullable()->index('num_rows');
+                $table->string('num_filled')->nullable()->index('num_filled');
+                $table->dateTime('create_date')->nullable();
+                $table->dateTime('modified_date')->useCurrentOnUpdate()->nullable();
+            });
+        }
     }
 
     /**

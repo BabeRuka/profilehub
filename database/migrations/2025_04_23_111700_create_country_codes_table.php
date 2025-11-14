@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('country_codes', function (Blueprint $table) {
-            $table->integer('country_id');
-            $table->string('country_code')->nullable();
-            $table->string('country_name')->nullable();
-            $table->string('country_currency_symbol')->nullable();
-            $table->string('country_currency_code')->nullable();
-            $table->string('country_currency')->nullable();
-        });
+        if (! Schema::hasTable('country_codes')) {
+            Schema::create('country_codes', function (Blueprint $table) {
+                $table->integer('country_id');
+                $table->string('country_code')->nullable();
+                $table->string('country_name')->nullable();
+                $table->string('country_currency_symbol')->nullable();
+                $table->string('country_currency_code')->nullable();
+                $table->string('country_currency')->nullable();
+            });
+        }
     }
 
     /**
