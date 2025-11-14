@@ -346,4 +346,16 @@ class ProfileController extends Controller
         $num_rows = ($num_rows->first() ? count($num_rows) : 0);
         return array($num_rows, $user_data);
     }
+    /**
+     * Log the user out of the application.
+     */
+    public function logoutrUser(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login');
+    }
 }
