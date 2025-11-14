@@ -61,6 +61,13 @@ class ProfileHubServiceProvider extends ServiceProvider
             __DIR__.'/../../resources/views/profilehub' => resource_path('views/vendor/profilehub'),
         ], 'profilehub-views');
 
+        //publish the seeders and the sql files
+        $this->publishes([ 
+            
+            __DIR__.'/../../database/seeders' => database_path('seeders'),
+            __DIR__.'/../../database/sql' => database_path('sql'),
+        ], 'profilehub-seeders'); 
+
         if ($this->app->runningInConsole()) {
             $this->commands([
                 \BabeRuka\ProfileHub\Console\Commands\MigrateProfilehubCommand::class,
