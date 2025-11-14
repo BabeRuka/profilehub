@@ -8,6 +8,12 @@ A Laravel package to manage user profiles.
 composer require baberuka/profilehub
 ```
 
+If the previous command doesn't work, try specifying the parameters more explicitly.
+
+```bash
+composer require "baberuka/profilehub:dev-main" --no-interaction --prefer-dist
+```
+
 ## Register the Service Provider (if not auto-discovered)
 If you're not using Laravel auto-discovery, register the provider manually in config/app.php.
 Add the ProfileHubServiceProvider calls to the providers section. 
