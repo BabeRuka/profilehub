@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('user_groups', function (Blueprint $table) {
-            $table->integer('group_id', true);
+            $table->unsignedInteger('group_id', true);
             $table->string('group_name')->nullable();
             $table->string('group_description')->nullable();
             $table->string('group_key')->nullable();
